@@ -736,7 +736,7 @@ function earningsInfo() {
     })
 }
 async function showmsg() {
-    if($.time("HH") == 10)
+    if($.time("HH") == 15)
        await notify.sendNotify($.name + " " + nick, $.sub, $.desc) 
     
     if ($.isNode() && rotaryres.status !== 0 && rotarytimes && (100 - rotarytimes) % 95 == 0 && cash >= 10) {
