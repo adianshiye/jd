@@ -736,6 +736,9 @@ function earningsInfo() {
     })
 }
 async function showmsg() {
+    if($.time("HH") == 10)
+       await notify.sendNotify($.name + " " + nick, $.sub, $.desc) 
+    
     if ($.isNode() && rotaryres.status !== 0 && rotarytimes && (100 - rotarytimes) % 95 == 0 && cash >= 10) {
         await notify.sendNotify($.name + " " + nick, "您的余额约为" + cash + "元，已可以提现" + '\n' + $.sub + `\n${$.desc}`)
     } else if (rotaryres.status == 1 && rotarytimes >= 97) {
