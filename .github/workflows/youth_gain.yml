@@ -36,7 +36,7 @@ jobs:
           YOUTH_START: ${{ secrets.YOUTH_START1 }}
           YOUTH_LOOK: ${{ secrets.YOUTH_LOOK1 }}
        
-       - name: '运行 【账号二中青浏览赚】'
+      - name: '运行 【账号二中青浏览赚】'
         if: env.YOUTH_START2
         run: |
           node youth_gain.js
