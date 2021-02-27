@@ -35,7 +35,6 @@ jobs:
           node youth.js
         env:
           YOUTH_NOTIFY_CONTROL: ${{ secrets.YOUTH_NOTIFY_CONTROL }}
-          TZ: Asia/shanghai
           PUSH_KEY: ${{ secrets.PUSH_KEY}}
           BARK_PUSH: ${{ secrets.BARK_PUSH}}
           BARK_SOUND: ${{ secrets.BARK_SOUND}}
