@@ -1,14 +1,14 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: Youth_Read1(1号中青自动阅读)
+name: Youth_Read1 (1号中青自动阅读)
 
 on:
   workflow_dispatch:
   schedule:
      - cron: '8 1-12/2 * * *'
   watch:
-    types: Youth_Read
+    types: Youth_Read1
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -30,36 +30,37 @@ jobs:
           npm install
           
       - name: '运行 【中青看点自动阅读一】'
-        if: env.YOUTH_READ
+        if: env.YOUTH_READ11
         run: |
           node Youth_Read.js
         env:
           YOUTH_READ: ${{ secrets.YOUTH_READ11 }}
 
       - name: '运行 【中青看点自动阅读二】'
-        if: env.YOUTH_READ2
+        if: env.YOUTH_READ12
         run: |
           node Youth_Read.js
         env:
           YOUTH_READ: ${{ secrets.YOUTH_READ12 }}
           
       - name: '运行 【中青看点自动阅读三】'
-        if: env.YOUTH_READ3
+        if: env.YOUTH_READ13
         run: |
           node Youth_Read.js
         env:
           YOUTH_READ: ${{ secrets.YOUTH_READ13 }}
           
       - name: '运行 【中青看点自动阅读四】'
-        if: env.YOUTH_READ4
+        if: env.YOUTH_READ14
         run: |
           node Youth_Read.js
         env:
           YOUTH_READ: ${{ secrets.YOUTH_READ14 }}
           
       - name: '运行 【中青看点自动阅读五】'
-        if: env.YOUTH_READ5
+        if: env.YOUTH_READ15
         run: |
           node Youth_Read.js
         env:
           YOUTH_READ: ${{ secrets.YOUTH_READ15 }}
+
