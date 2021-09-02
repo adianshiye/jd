@@ -49,9 +49,11 @@ let allMessage='',ErrorMessage='',SuccessMessage='',DisableMessage='',EnableMess
 		  if (DisableCkBody.code == 200) {
 		    console.log(`京东账号${$.index} : ${$.nickName || $.UserName}${$.Remark} 已失效,自动禁用成功!\n`);
 		    DisableMessage += `京东账号${$.index} : ${$.nickName || $.UserName}${$.Remark} (自动禁用成功!)\n`;
+		    ErrorMessage += `京东账号${$.index} : ${$.nickName || $.UserName}${$.Remark}  已失效,自动禁用成功!\n`;  
 			} else {
 				console.log(`京东账号${$.index} : ${$.nickName || $.UserName}${$.Remark} 已失效,自动禁用失败!\n`);
 				DisableMessage += `京东账号${$.index} : ${$.nickName || $.UserName}${$.Remark} (自动禁用失败!)\n`;
+				ErrorMessage += `京东账号${$.index} : ${$.nickName || $.UserName}${$.Remark}  已失效,自动禁用失败!\n`;
 			}			
 		} else {
 			console.log(`京东账号${$.index} : ${$.nickName || $.UserName}${$.Remark} 已失效,已禁用!\n`);
