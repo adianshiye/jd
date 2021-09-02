@@ -14,6 +14,8 @@ Update : 20210903
 
 增加变量停用自动启用CK:  export CKAUTOENABLE="false"
 
+增加变量不显示CK备注:  export CKREMARK="false"
+
 2.ql.js 是jd_CheckCK.js的依赖,一起放在Scripts里面
 
 3.jd_bean_change.js
