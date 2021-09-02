@@ -1,3 +1,6 @@
+/*
+cron "30 * * * *" jd_CheckCK.js, tag:京东CK检测by-ccwav
+*/
 //Check Ck Tools by ccwav
 //Update : 20210902
 const $ = new Env('京东CK检测');
