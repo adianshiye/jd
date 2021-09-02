@@ -142,12 +142,25 @@ function TotalBean() {
 			  $.nickName = decodeURIComponent($.UserName);
               return
             }
+		  
+	    //100跟101好像是wscode更新的ck特有的返回值
+            if (data['retcode'] === 100) {
+              $.isLogin = false; //cookie过期
+	      $.nickName = decodeURIComponent($.UserName);
+              return
+            }
+	    if (data['retcode'] === 101) {
+              $.isLogin = false; //cookie过期
+	      $.nickName = decodeURIComponent($.UserName);
+              return
+            }
+		  
             if (data['retcode'] === 0) {
               $.nickName = (data['base'] && data['base'].nickname) || decodeURIComponent($.UserName);
             } else {
               $.nickName = decodeURIComponent($.UserName);
-			  console.log("Debug Code:"+data['retcode']);
-			  $.error=`${$.name} :`+`服务器返回未知状态，不做变动\n`;		
+	      console.log("Debug Code:"+data['retcode']);
+	      $.error=`${$.nickName} :`+`服务器返回未知状态，不做变动\n`;		
             }
           } else {
             console.log(`京东服务器返回空数据`)
