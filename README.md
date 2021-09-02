@@ -8,5 +8,12 @@
 
 2.ql.js 是jd_CheckCK.js的依赖,一起放在Scripts里面
 
-2.jd_bean_change.js
+3.jd_bean_change.js
 自用的京东资产变动查询加强版
+
+4.sendNotify.js
+增加了NOTIFY_GROUP_LIST，如果通知标题在此变量里面(&隔开),则使用 QYWX_AM2 跟 PUSH_PLUS_USER2 变量替换QYWX_AM 跟 PUSH_PLUS_USER 以达到通知不通的群组.
+
+其他功能待修改.
+
+暂时qinglong还不能直接拉，晚点看看怎么搞.
