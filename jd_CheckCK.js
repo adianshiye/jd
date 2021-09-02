@@ -6,7 +6,7 @@ cron "30 * * * *" jd_CheckCK.js, tag:京东CK检测by-ccwav
 //增加变量显示正常CK:  export SHOWSUCCESSCK="true"
 //增加变量永远通知CK状态:  export CKALWAYSNOTIFY="true"
 //增加变量停用自动启用CK:  export CKAUTOENABLE="false"
-
+//增加变量不显示CK备注:  export CKREMARK="false"
 const $ = new Env('京东CK检测');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
@@ -19,7 +19,7 @@ const api = got.extend({
 });
 
 let allMessage='',ErrorMessage='',SuccessMessage='',DisableMessage='',EnableMessage='',OErrorMessage='';
-let ShowSuccess="false",CKAlwaysNotify="false",CKAutoEnable="true";
+let ShowSuccess="false",CKAlwaysNotify="false",CKAutoEnable="true",CKRemark="true";
 
 if (process.env.SHOWSUCCESSCK) {
   ShowSuccess = process.env.SHOWSUCCESSCK;
@@ -29,6 +29,9 @@ if (process.env.CKALWAYSNOTIFY) {
 }
 if (process.env.CKAUTOENABLE) {
   CKAutoEnable = process.env.CKAUTOENABLE;
+}
+if (process.env.CKREMARK) {
+  CKRemark = process.env.CKREMARK;
 }
 
 !(async () => {  
@@ -46,11 +49,14 @@ if (process.env.CKAUTOENABLE) {
       $.isLogin = true;
 	  $.error = '';
       $.nickName = decodeURIComponent($.UserName); 
-	  $.Remark = envs[i].remarks||'';	  	  
-	  if($.Remark){
-		  $.Remark = $.Remark.replace("remark=","");
-		  $.Remark = $.Remark.replace(";","");
-		  $.Remark="("+$.Remark+")";
+	  $.Remark = '';
+	  if (CKRemark=="true"){
+		  $.Remark = envs[i].remarks||'';	  	  
+		  if($.Remark){
+			  $.Remark = $.Remark.replace("remark=","");
+			  $.Remark = $.Remark.replace(";","");
+			  $.Remark="("+$.Remark+")";
+		  }	
 	  }	  
 	  console.log(`开始检测【京东账号${$.index}】${$.nickName}${$.Remark}....\n`);
 	 
