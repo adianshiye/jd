@@ -145,13 +145,11 @@ function TotalBean() {
 		  
 	    //100跟101好像是wscode更新的ck特有的返回值
             if (data['retcode'] === 100) {
-              $.isLogin = false; //cookie过期
-	      $.nickName = decodeURIComponent($.UserName);
+              $.nickName = (data['base'] && data['base'].nickname) || decodeURIComponent($.UserName);
               return
             }
 	    if (data['retcode'] === 101) {
-              $.isLogin = false; //cookie过期
-	      $.nickName = decodeURIComponent($.UserName);
+              $.nickName = (data['base'] && data['base'].nickname) || decodeURIComponent($.UserName);
               return
             }
 		  
