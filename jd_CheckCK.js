@@ -2,7 +2,11 @@
 cron "30 * * * *" jd_CheckCK.js, tag:京东CK检测by-ccwav
 */
 //Check Ck Tools by ccwav
-//Update : 20210902
+//Update : 20210903
+//增加变量显示正常CK:  export SHOWSUCCESSCK="true"
+//增加变量永远通知CK状态:  export CKALWAYSNOTIFY="true"
+//增加变量停用自动启用CK:  export CKAUTOENABLE="false"
+
 const $ = new Env('京东CK检测');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
@@ -14,8 +18,18 @@ const api = got.extend({
   responseType: 'json',
 });
 
-let allMessage='',ErrorMessage='',SuccessMessage='',DisableMessage='',EnableMessage='',OErrorMessage=''
+let allMessage='',ErrorMessage='',SuccessMessage='',DisableMessage='',EnableMessage='',OErrorMessage='';
+let ShowSuccess="false",CKAlwaysNotify="false",CKAutoEnable="true";
 
+if (process.env.SHOWSUCCESSCK) {
+  ShowSuccess = process.env.SHOWSUCCESSCK;
+}
+if (process.env.CKALWAYSNOTIFY) {
+  CKAlwaysNotify = process.env.CKALWAYSNOTIFY;
+}
+if (process.env.CKAUTOENABLE) {
+  CKAutoEnable = process.env.CKAUTOENABLE;
+}
 
 !(async () => {  
   const envs = await getEnvs();
@@ -64,13 +78,18 @@ let allMessage='',ErrorMessage='',SuccessMessage='',DisableMessage='',EnableMess
 		}
 	  } else {
 		  if (envs[i].status==1){
-			  const EnableCkBody = await EnableCk(envs[i]._id);
-			  if (EnableCkBody.code == 200) {
-				console.log(`京东账号${$.index} : ${$.nickName || $.UserName}${$.Remark} 已恢复,自动启用成功!\n`);
-				EnableMessage += `京东账号${$.index} : ${$.nickName || $.UserName}${$.Remark} (自动启用成功!)\n`;
+			  if (CKAutoEnable=="true"){
+				  const EnableCkBody = await EnableCk(envs[i]._id);
+				  if (EnableCkBody.code == 200) {
+					console.log(`京东账号${$.index} : ${$.nickName || $.UserName}${$.Remark} 已恢复,自动启用成功!\n`);
+					EnableMessage += `京东账号${$.index} : ${$.nickName || $.UserName}${$.Remark} (自动启用成功!)\n`;
+					} else {
+						console.log(`京东账号${$.index} : ${$.nickName || $.UserName}${$.Remark} 已恢复,自动启用失败!\n`);
+						EnableMessage += `京东账号${$.index} : ${$.nickName || $.UserName}${$.Remark} (自动启用失败!)\n`;
+					}
 				} else {
-					console.log(`京东账号${$.index} : ${$.nickName || $.UserName}${$.Remark} 已恢复,自动启用失败!\n`);
-					EnableMessage += `京东账号${$.index} : ${$.nickName || $.UserName}${$.Remark} (自动启用失败!)\n`;
+					console.log(`京东账号${$.index} : ${$.nickName || $.UserName}${$.Remark} 已恢复，可手动启用!\n`);
+					EnableMessage += `京东账号${$.index} : ${$.nickName || $.UserName}${$.Remark} 已恢复，可手动启用.\n`;
 				}
 		  } else { 
 			console.log(`京东账号${$.index} : ${$.nickName || $.UserName}${$.Remark} 状态正常!\n`);
@@ -89,7 +108,11 @@ let allMessage='',ErrorMessage='',SuccessMessage='',DisableMessage='',EnableMess
 		  allMessage+=`👇👇👇👇👇自动禁用账号👇👇👇👇👇\n`+DisableMessage+`\n\n`;		  
 	  }	  
 	  if (EnableMessage){
-		  allMessage+=`👇👇👇👇👇自动启用账号👇👇👇👇👇\n`+EnableMessage+`\n\n`;		  
+		  if (CKAutoEnable=="true"){
+			allMessage+=`👇👇👇👇👇自动启用账号👇👇👇👇👇\n`+EnableMessage+`\n\n`;
+		  }	else {
+			allMessage+=`👇👇👇👇👇账号已恢复👇👇👇👇👇\n`+EnableMessage+`\n\n`;
+		  }			  
 	  }	  
 	  
 	  if (ErrorMessage){
@@ -100,10 +123,10 @@ let allMessage='',ErrorMessage='',SuccessMessage='',DisableMessage='',EnableMess
 	  
 	  console.log(allMessage);
 	  
-	  //if (SuccessMessage){
-		  //allMessage+=`👇👇👇👇👇👇👇有效账号👇👇👇👇👇👇👇\n`+SuccessMessage+`\n`;		  
-	  //}
-	  if ($.isNode() && (EnableMessage || DisableMessage || OErrorMessage)) {
+	  if (ShowSuccess=="true" && SuccessMessage){
+		  allMessage+=`👇👇👇👇👇有效账号👇👇👇👇👇\n`+SuccessMessage+`\n`;		  
+	  }
+	  if ($.isNode() && (EnableMessage || DisableMessage || OErrorMessage || CKAlwaysNotify=="true")) {
 		await notify.sendNotify(`${$.name}`, `${allMessage}`, { url: `https://bean.m.jd.com/beanDetail/index.action?resourceValue=bean` })
 	  }
    }
