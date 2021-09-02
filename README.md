@@ -12,7 +12,7 @@
 3.jd_bean_change.js
 自用的京东资产变动查询加强版
 
-4.sendNotify.js
+4.sendNotify.js (没有Ninjia会报错，别用)
 增加了NOTIFY_GROUP_LIST，如果通知标题在此变量里面(&隔开),则使用 QYWX_AM2 跟 PUSH_PLUS_USER2 变量替换QYWX_AM 跟 PUSH_PLUS_USER 以达到通知不通的群组.
 
 其他功能待修改.
