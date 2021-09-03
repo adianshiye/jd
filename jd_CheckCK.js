@@ -178,10 +178,12 @@ function TotalBean() {
             }            
           } else {
             $.log('京东服务器返回空数据');
+			$.error=`${$.nickName} :`+`服务器返回空数据，不做变动\n`;
           }
         }
       } catch (e) {
         $.logErr(e)
+		$.error=`检测出错，不做变动\n`;
       } finally {
         resolve();
       }
