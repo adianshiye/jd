@@ -40,13 +40,13 @@
 
 Update :
 
-	Update : 20210905:
-	
-	新增NOTIFY_COMPTOGROUP2
+	Update : 20210905:	
 	
 	格式化京东到家果园互助码，原内容后面显示，去除无用的互助码.
 	
 	永远屏蔽东东农场忘了种植水果的烦人通知,永远且没有开关.....
+	
+	新增NOTIFY_COMPTOGROUP2，具体用法看下方说明
 
 	Update : 20210904:
 
