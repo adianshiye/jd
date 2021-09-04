@@ -86,4 +86,4 @@
 
 	包含sendNotify:
 
-	ql repo https://github.com/ccwav/QLScript.git "jd_" "" "ql.js"
+	ql repo https://github.com/ccwav/QLScript.git "jd_" "" "ql.js|sendNotify.js"
