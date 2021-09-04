@@ -1,7 +1,10 @@
 # QLScript
 
+注意: 
+
+    ql.js 是jd_CheckCK.js和sendNotify.js的依赖,只要你使用了这两个脚本就一定保证放在同个文件夹里面.
+
 脚本介绍:
-ql.js 是jd_CheckCK.js和sendNotify.js的依赖,只要你使用了这两个脚本就一定保证放在同个文件夹里面.
 
 
 1.jd_CheckCK.js
