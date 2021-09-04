@@ -38,7 +38,17 @@
 
 3.sendNotify.js 
 
-	Update : 20210904
+Update :
+
+	Update : 20210905:
+	
+	新增NOTIFY_COMPTOGROUP2
+	
+	格式化京东到家果园互助码，原内容后面显示，去除无用的互助码.
+	
+	永远屏蔽东东农场忘了种植水果的烦人通知,永远且没有开关.....
+
+	Update : 20210904:
 
 	新增一堆变量，要自己看好，我尽量写详细点:
 
@@ -77,6 +87,14 @@
 	
 	例子 :  export NOTIFY_SKIP_REMARK_LIST="京东CK检测"  
 
+(5) NOTIFY_COMPTOGROUP2
+
+	东东农场 东东萌宠 京喜工厂 这三个任务接收到产品可以兑换通知时推送到群组2.
+	
+	例子 :  export NOTIFY_COMPTOGROUP2=="true"
+	
+	企业微信配置了QYWX_AM和QYWX_AM2,则发送兑换通知时会推送到QYWX_AM2配置的企业微信.
+	
 
 青龙拉库命令:
 
