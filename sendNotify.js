@@ -9,6 +9,7 @@
  * @param params 某些推送通知方式点击弹窗可跳转, 例：{ url: 'https://abc.com' }
  * @param author 作者仓库等信息  例：`本通知 By：https://github.com/whyour/qinglong`
  */
+//sendNotify Pro增加的变量请移步https://github.com/ccwav/QLScript 查看.
 
 const querystring = require('querystring');
 const $ = new Env();
@@ -175,8 +176,13 @@ if (process.env.PUSH_PLUS_USER) {
  */
  
 let ShowRemarkType="1";
+let Notify_CompToGroup2="false";
+let UseGroup2=false;
 if (process.env.SHOWREMARKTYPE) {
   ShowRemarkType = process.env.SHOWREMARKTYPE;
+}
+if (process.env.NOTIFY_COMPTOGROUP2) {
+  Notify_CompToGroup2 = process.env.NOTIFY_COMPTOGROUP2;
 }
 
 const {getEnvs} = require('./ql');
@@ -186,7 +192,7 @@ let strCKFile = './CKName_cache.json';
 let Fileexists = fs.existsSync(strCKFile);
 let TempCK = [];
 if (Fileexists) {
-	console.log("检测到缓存文件，载入...");
+	console.log("加载sendNotify,检测到别名缓存文件，载入...");
     TempCK = fs.readFileSync(strCKFile, 'utf-8');
     if (TempCK) {
         TempCK = TempCK.toString();
@@ -196,8 +202,20 @@ if (Fileexists) {
 let tempAddCK={};
 let boolneedUpdate=false;
 async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By qinglong(ccwav Mod)') {
-  
+  console.log(`开始发送通知...`);
   try {
+	if(!desp){ 
+	    console.log(`通知内容为空，不推送`);
+		return;
+	}
+	
+	if(text=="东东农场"){
+		if(desp.indexOf("忘了种植") != -1){
+			console.log(`东东农场没有种植，不推送`);
+			return;
+		}		
+	}
+	
 	//检查黑名单屏蔽通知  
     const notifySkipList = process.env.NOTIFY_SKIP_LIST ? process.env.NOTIFY_SKIP_LIST.split('&') : [];
     const titleIndex = notifySkipList.findIndex((item) => item === text);
@@ -211,10 +229,33 @@ async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By qi
 	
 	const notifyGroupList = process.env.NOTIFY_GROUP_LIST ? process.env.NOTIFY_GROUP_LIST.split('&') : [];
     const titleIndex2 = notifyGroupList.findIndex((item) => item === text);
-
-    if (titleIndex2 !== -1) {
+	if(Notify_CompToGroup2=="true"){
+		if(text=="东东农场"){
+			if(desp.indexOf("已可领取") != -1){
+				console.log(`东东农场领取信息推送至群组2`);
+				UseGroup2=true;
+			}		
+		}
+		if(text=="东东萌宠"){
+			if(desp.indexOf("已可领取") != -1){
+				console.log(`东东萌宠领取信息推送至群组2`);
+				UseGroup2=true;
+			}		
+		}
+		if(text=="京喜工厂"){
+			if(desp.indexOf("可以兑换商品") != -1){
+				console.log(`京喜工厂领取信息推送至群组2`);
+				UseGroup2=true;
+			}		
+		}
+	}
+	if (titleIndex2 !== -1) {
+		console.log(`${text} 在群组2推送名单中，初始化群组推送`);
+		UseGroup2=true;
+	}
+    if (UseGroup2) {
 		//==========================第二套环境变量赋值=========================
-		console.log(`${text} 在群组推送名单中，初始化群组推送`);
+		
 		if (process.env.GOBOT_URL2) {
 		  GOBOT_URL = process.env.GOBOT_URL2;
 		}
@@ -292,7 +333,25 @@ async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By qi
 	//检查是否在不使用Remark进行名称替换的名单
 	const notifySkipRemarkList = process.env.NOTIFY_SKIP_REMARK_LIST ? process.env.NOTIFY_SKIP_REMARK_LIST.split('&') : [];
     const titleIndex3 = notifySkipRemarkList.findIndex((item) => item === text);
-    		
+	
+	if(text=="京东到家果园互助码:"){
+	  ShowRemarkType="3";	
+	  var arrTemp = desp.split(",");
+	  var allCode ="";
+	  for (let k = 0; k < arrTemp.length; k++) {
+		  if(arrTemp[k]){			  
+			  if(arrTemp[k].substring(0,1)!="@")
+				  allCode+=arrTemp[k]+",";
+		  }
+	  }
+	  
+	  if(allCode){		  
+		  desp+='\n'+'\n'+"ccwav格式化后的互助码:"+'\n'+allCode;
+	  }
+	  console.log(desp);
+		  
+	}
+	
     if (ShowRemarkType!="3" &&titleIndex3 == -1) {
 		console.log("正在处理账号Remark.....");
 		//开始读取青龙变量列表
@@ -340,7 +399,8 @@ async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By qi
 					if(ShowRemarkType=="2"){
 						$.Remark=$.nickName+"("+$.Remark+")";	
 					} 
-					desp = desp.replace(new RegExp($.nickName,'gm'),$.Remark);
+					//加个空格，因为有些通知账号前没有空格很丑-_-!!!
+					desp = desp.replace(new RegExp($.nickName,'gm')," "+$.Remark);
 					//console.log($.nickName+$.Remark);
 					
 				}	
