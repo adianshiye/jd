@@ -11,19 +11,19 @@
 
 自动检测账号是否正常，不正常的自动禁用，正常的如果是禁用状态则自动启用.
 
-Update : 20210904
+	Update : 20210904
 
-更换检测接口.
+	更换检测接口.
 
-Update : 20210903
+	Update : 20210903
 
-增加变量显示正常CK:  export SHOWSUCCESSCK="true"
+	增加变量显示正常CK:  export SHOWSUCCESSCK="true"
 
-增加变量永远通知CK状态:  export CKALWAYSNOTIFY="true"
+	增加变量永远通知CK状态:  export CKALWAYSNOTIFY="true"
 
-增加变量停用自动启用CK:  export CKAUTOENABLE="false"
+	增加变量停用自动启用CK:  export CKAUTOENABLE="false"
 
-增加变量不显示CK备注:  export CKREMARK="false"
+	增加变量不显示CK备注:  export CKREMARK="false"
 
 
 
@@ -31,16 +31,16 @@ Update : 20210903
 
 自用的京东资产变动查询加强版
 
-Update : 20210903
+	Update : 20210903
 
-增加领现金金额显示.
+	增加领现金金额显示.
 
 
-4.sendNotify.js 
+3.sendNotify.js 
 
-Update : 20210904
+	Update : 20210904
 
-新增一堆变量，要自己看好，我尽量写详细点:
+	新增一堆变量，要自己看好，我尽量写详细点:
 
 (1) NOTIFY_SKIP_LIST
 
@@ -78,11 +78,12 @@ Update : 20210904
 	例子 :  export NOTIFY_SKIP_REMARK_LIST="京东CK检测"  
 
 
+青龙拉库命令:
 
-青龙拉库命令(不包含sendNotify.js):
+	不包含sendNotify:
 
-ql repo https://github.com/ccwav/QLScript.git "jd_" "sendNotify.js" "ql.js"
+	ql repo https://github.com/ccwav/QLScript.git "jd_" "sendNotify.js" "ql.js"
 
-青龙拉库命令(包含sendNotify.js):
+	包含sendNotify:
 
-ql repo https://github.com/ccwav/QLScript.git "jd_" "" "ql.js"
+	ql repo https://github.com/ccwav/QLScript.git "jd_" "" "ql.js"
