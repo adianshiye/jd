@@ -13,6 +13,7 @@
 const querystring = require('querystring');
 const $ = new Env();
 const timeout = 15000; //超时时间(单位毫秒)
+
 // =======================================go-cqhttp通知设置区域===========================================
 //gobot_url 填写请求地址http://127.0.0.1/send_private_msg
 //gobot_token 填写在go-cqhttp文件设置的访问密钥
@@ -82,6 +83,7 @@ let IGOT_PUSH_KEY = '';
 //PUSH_PLUS_USER： 一对多推送的“群组编码”（一对多推送下面->您的群组(如无则新建)->群组编码，如果您是创建群组人。也需点击“查看二维码”扫描绑定，否则不能接受群组消息推送）
 let PUSH_PLUS_TOKEN = '';
 let PUSH_PLUS_USER = '';
+
 
 //==========================云端环境变量的判断与接收=========================
 if (process.env.GOBOT_URL) {
@@ -171,8 +173,32 @@ if (process.env.PUSH_PLUS_USER) {
  * @param author 作者仓库等信息  例：`本通知 By：https://github.com/whyour/qinglong`
  * @returns {Promise<unknown>}
  */
-async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By ccwav') {
+ 
+let ShowRemarkType="1";
+if (process.env.SHOWREMARKTYPE) {
+  ShowRemarkType = process.env.SHOWREMARKTYPE;
+}
+
+const {getEnvs} = require('./ql');
+ 
+const fs = require('fs');
+let strCKFile = './CKName_cache.json';
+let Fileexists = fs.existsSync(strCKFile);
+let TempCK = [];
+if (Fileexists) {
+	console.log("检测到缓存文件，载入...");
+    TempCK = fs.readFileSync(strCKFile, 'utf-8');
+    if (TempCK) {
+        TempCK = TempCK.toString();
+        TempCK = JSON.parse(TempCK);
+    }
+}
+let tempAddCK={};
+let boolneedUpdate=false;
+async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By qinglong(ccwav Mod)') {
+  
   try {
+	//检查黑名单屏蔽通知  
     const notifySkipList = process.env.NOTIFY_SKIP_LIST ? process.env.NOTIFY_SKIP_LIST.split('&') : [];
     const titleIndex = notifySkipList.findIndex((item) => item === text);
 
@@ -180,34 +206,167 @@ async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By cc
       console.log(`${text} 在推送黑名单中，已跳过推送`);
       return;
     }
+	
+	//检查脚本名称是否需要通知到Group2,Group2读取原环境配置的变量名后加2的值.例如: QYWX_AM2
+	
 	const notifyGroupList = process.env.NOTIFY_GROUP_LIST ? process.env.NOTIFY_GROUP_LIST.split('&') : [];
     const titleIndex2 = notifyGroupList.findIndex((item) => item === text);
 
     if (titleIndex2 !== -1) {
+		//==========================第二套环境变量赋值=========================
 		console.log(`${text} 在群组推送名单中，初始化群组推送`);
-     if (process.env.QYWX_AM2) {
-		  QYWX_AM = process.env.QYWX_AM2;
+		if (process.env.GOBOT_URL2) {
+		  GOBOT_URL = process.env.GOBOT_URL2;
 		}
-	 if (process.env.PUSH_PLUS_USER2) {
-		  PUSH_PLUS_USER = process.env.PUSH_PLUS_USER2;
+		if (process.env.GOBOT_TOKEN2) {
+		  GOBOT_TOKEN = process.env.GOBOT_TOKEN2;
 		}
-    }
-    if(text!="京东CK检测"){
-		const got = require('got');
+		if (process.env.GOBOT_QQ2) {
+		  GOBOT_QQ = process.env.GOBOT_QQ2;
+		}
 
-		const body = await got('http://localhost:5701/api/users').json();
-		const users = body.data;
+		if (process.env.PUSH_KEY2) {
+		  SCKEY = process.env.PUSH_KEY2;
+		}
 
-		for (const user of users) {
-		  if (user.pt_pin && user.nickName && user.remark) {
-			desp = desp.replace(new RegExp(`${user.pt_pin}|${user.nickName}`, 'gm'), user.remark);
+		if (process.env.QQ_SKEY2) {
+		  QQ_SKEY = process.env.QQ_SKEY2;
+		}
+
+		if (process.env.QQ_MODE2) {
+		  QQ_MODE = process.env.QQ_MODE2;
+		}
+
+		if (process.env.BARK_PUSH2) {
+		  if (process.env.BARK_PUSH2.indexOf('https') > -1 || process.env.BARK_PUSH2.indexOf('http') > -1) {
+			//兼容BARK自建用户
+			BARK_PUSH = process.env.BARK_PUSH2;
+		  } else {
+			BARK_PUSH = `https://api.day.app/${process.env.BARK_PUSH2}`;
+		  }
+		  if (process.env.BARK_SOUND2) {
+			BARK_SOUND = process.env.BARK_SOUND2;
+		  }
+		  if (process.env.BARK_GROUP2) {
+			BARK_GROUP = process.env.BARK_GROUP2;
+		  }
+		} 
+		if (process.env.TG_BOT_TOKEN2) {
+		  TG_BOT_TOKEN = process.env.TG_BOT_TOKEN2;
+		}
+		if (process.env.TG_USER_ID2) {
+		  TG_USER_ID = process.env.TG_USER_ID2;
+		}
+		if (process.env.TG_PROXY_AUTH2) TG_PROXY_AUTH = process.env.TG_PROXY_AUTH2;
+		if (process.env.TG_PROXY_HOST2) TG_PROXY_HOST = process.env.TG_PROXY_HOST2;
+		if (process.env.TG_PROXY_PORT2) TG_PROXY_PORT = process.env.TG_PROXY_PORT2;
+		if (process.env.TG_API_HOST2) TG_API_HOST = process.env.TG_API_HOST2;
+
+		if (process.env.DD_BOT_TOKEN2) {
+		  DD_BOT_TOKEN = process.env.DD_BOT_TOKEN2;
+		  if (process.env.DD_BOT_SECRET2) {
+			DD_BOT_SECRET = process.env.DD_BOT_SECRET2;
 		  }
 		}
+
+		if (process.env.QYWX_KEY2) {
+		  QYWX_KEY = process.env.QYWX_KEY2;
+		}
+
+		if (process.env.QYWX_AM2) {
+		  QYWX_AM = process.env.QYWX_AM2;
+		}
+
+		if (process.env.IGOT_PUSH_KEY2) {
+		  IGOT_PUSH_KEY = process.env.IGOT_PUSH_KEY2;
+		}
+
+		if (process.env.PUSH_PLUS_TOKEN2) {
+		  PUSH_PLUS_TOKEN = process.env.PUSH_PLUS_TOKEN2;
+		}
+		if (process.env.PUSH_PLUS_USER2) {
+		  PUSH_PLUS_USER = process.env.PUSH_PLUS_USER2;
+		}														
+
+    }
+	//检查是否在不使用Remark进行名称替换的名单
+	const notifySkipRemarkList = process.env.NOTIFY_SKIP_REMARK_LIST ? process.env.NOTIFY_SKIP_REMARK_LIST.split('&') : [];
+    const titleIndex3 = notifySkipRemarkList.findIndex((item) => item === text);
+    		
+    if (ShowRemarkType!="3" &&titleIndex3 == -1) {
+		console.log("正在处理账号Remark.....");
+		//开始读取青龙变量列表
+		const envs = await getEnvs();
+		if (envs[0]) {	
+			for (let i = 0; i < envs.length; i++) {				
+				if (envs[i].status==1){
+					//账号状态为1是禁用，跳过
+					continue;
+				}
+				cookie = envs[i].value;
+				$.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
+				$.nickName=""				
+				$.Remark = envs[i].remarks||'';	
+				$.FoundnickName=""
+				$.FoundPin=""
+				//判断有没有Remark，没有搞个屁，有的继续
+				if($.Remark){
+					//先查找缓存文件中有没有这个账号，有的话直接读取别名
+					if (TempCK) {
+						for (let j = 0; j < TempCK.length; j++) {
+						  if (TempCK[j].pt_pin==$.UserName){
+							$.FoundPin=TempCK[j].pt_pin;
+							$.nickName=TempCK[j].nickName;	
+						  }
+						}
+					  }					
+					if(!$.FoundPin){
+						//缓存文件中有没有这个账号，调用京东接口获取别名,并更新缓存文件
+						await GetnickName();
+						console.log("好像是新账号，从接口获取别名"+$.nickName);
+						tempAddCK={
+							"pt_pin": $.UserName,
+							"nickName": $.nickName
+							};
+						TempCK.push(tempAddCK);
+						//标识，需要更新缓存文件
+						boolneedUpdate=true;
+					}					
+					$.nickName=$.nickName||$.UserName;
+					//这是为了处理ninjia的remark格式
+					$.Remark = $.Remark.replace("remark=","");
+					$.Remark = $.Remark.replace(";","");					
+					//开始替换内容中的名字
+					if(ShowRemarkType=="2"){
+						$.Remark=$.nickName+"("+$.Remark+")";	
+					} 
+					desp = desp.replace(new RegExp($.nickName,'gm'),$.Remark);
+					//console.log($.nickName+$.Remark);
+					
+				}	
+		  	
+			}
+			
+			
+		}
+		console.log("处理完成，开始发送通知...");
 	}
   } catch (error) {
     console.error(error);
   }
-
+  
+  if(boolneedUpdate){
+	  var str = JSON.stringify(TempCK,null,2);
+	fs.writeFile(strCKFile, str, function(err) {
+		if (err) {
+			console.log(err);
+			console.log("更新CKName_cache.json失败!");
+		} else {
+			console.log("缓存文件CKName_cache.json更新成功!");
+		}
+	})
+  }
+	  
   //提供6种通知
   desp += author; //增加作者信息，防止被贩卖等
   await Promise.all([
@@ -790,6 +949,48 @@ function pushPlusNotify(text, desp) {
       resolve();
     }
   });
+}
+
+function GetnickName() {
+  return new Promise(async resolve => {
+    const options = {
+      url: "https://me-api.jd.com/user_new/info/GetJDUserInfoUnion",
+      headers: {
+        Host: "me-api.jd.com",
+        Accept: "*/*",
+        Connection: "keep-alive",
+        Cookie: cookie,
+        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
+        "Accept-Language": "zh-cn",
+        "Referer": "https://home.m.jd.com/myJd/newhome.action?sceneval=2&ufc=&",
+        "Accept-Encoding": "gzip, deflate, br"
+      }
+    }
+    $.get(options, (err, resp, data) => {
+      try {
+        if (err) {
+          $.logErr(err)
+        } else {
+          if (data) {
+            data = JSON.parse(data);
+            if (data['retcode'] === "1001") {              
+              return;
+            }
+            if (data['retcode'] === "0" && data.data && data.data.hasOwnProperty("userInfo")) {
+              $.nickName = data.data.userInfo.baseInfo.nickname;
+            }
+            
+          } else {
+            $.log('京东服务器返回空数据');
+          }
+        }
+      } catch (e) {
+        $.logErr(e)
+      } finally {
+        resolve();
+      }
+    })
+  })
 }
 
 module.exports = {
