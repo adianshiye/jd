@@ -42,6 +42,7 @@ Update : 20210904
 (1) NOTIFY_SKIP_LIST
 
     如果通知标题在此变量里面存在(&隔开),则用屏蔽不发送通知.
+	(PS: Ningjia 作者写的功能，继承过来.)
 	
     例子 :  export NOTIFY_SKIP_LIST="京东CK检测&京东资产变动"
 	
