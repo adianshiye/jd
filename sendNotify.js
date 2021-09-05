@@ -234,6 +234,12 @@ async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By qi
 			console.log(`领取信息推送至群组2`);
 			UseGroup2=true;
 		}	
+		if(text=="京喜工厂"){
+			if(desp.indexOf("元造进行兑换") != -1){
+				console.log(`京喜工厂领取信息推送至群组2`);
+				UseGroup2=true;
+			}		
+		}
 	}
 	if (titleIndex2 !== -1) {
 		console.log(`${text} 在群组2推送名单中，初始化群组推送`);
@@ -322,20 +328,20 @@ async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By qi
 	
 	if(text=="京东到家果园互助码:"){
 	  ShowRemarkType="3";	
-	  var arrTemp = desp.split(",");
-	  var allCode ="";
-	  for (let k = 0; k < arrTemp.length; k++) {
-		  if(arrTemp[k]){			  
-			  if(arrTemp[k].substring(0,1)!="@")
-				  allCode+=arrTemp[k]+",";
+	  if(desp){
+		  var arrTemp = desp.split(",");
+		  var allCode ="";
+		  for (let k = 0; k < arrTemp.length; k++) {
+			  if(arrTemp[k]){			  
+				  if(arrTemp[k].substring(0,1)!="@")
+					  allCode+=arrTemp[k]+",";
+			  }
+		  }
+		  
+		  if(allCode){		  
+			  desp+='\n'+'\n'+"ccwav格式化后的互助码:"+'\n'+allCode;
 		  }
 	  }
-	  
-	  if(allCode){		  
-		  desp+='\n'+'\n'+"ccwav格式化后的互助码:"+'\n'+allCode;
-	  }
-	  console.log(desp);
-		  
 	}
 	
     if (ShowRemarkType!="3" &&titleIndex3 == -1) {
