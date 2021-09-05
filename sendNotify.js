@@ -384,9 +384,12 @@ async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By qi
 					//开始替换内容中的名字
 					if(ShowRemarkType=="2"){
 						$.Remark=$.nickName+"("+$.Remark+")";	
-					} 
+					}
+					if(ShowRemarkType=="4"){
+						$.Remark=$.nickName+"("+$.Remark+")";	
+					}					
 					//加个空格，因为有些通知账号前没有空格很丑-_-!!!
-					desp = desp.replace(new RegExp($.nickName,'gm')," "+$.Remark);
+					desp = desp.replace(new RegExp(`${$.UserName}|${$.nickName}`, 'gm'), " "+$.Remark);
 					//console.log($.nickName+$.Remark);
 					
 				}	
