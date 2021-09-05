@@ -77,13 +77,13 @@ Update :
 
 	例子: 账号名:ccwav  别名:ccwav的别名  Remark: 代码玩家
 	
-	export NOTIFY_GROUP_LIST="1"    效果是 :  账号名称：代码玩家
+	export SHOWREMARKTYPE="1"    效果是 :  账号名称：代码玩家
 	
-    export NOTIFY_GROUP_LIST="2"    效果是 :  账号名称：ccwav的别名(代码玩家)
+    export SHOWREMARKTYPE="2"    效果是 :  账号名称：ccwav的别名(代码玩家)
 	
-    export NOTIFY_GROUP_LIST="3"    不做处理,效果是 :  账号名称：ccwav   
+    export SHOWREMARKTYPE="3"    不做处理,效果是 :  账号名称：ccwav   
 	
-	export NOTIFY_GROUP_LIST="4"    不做处理,效果是 :  账号名称：ccwav(代码玩家)
+	export SHOWREMARKTYPE="4"    不做处理,效果是 :  账号名称：ccwav(代码玩家)
 	
 (4) NOTIFY_SKIP_REMARK_LIST 
 
