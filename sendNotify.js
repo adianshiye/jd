@@ -177,6 +177,7 @@ if (process.env.PUSH_PLUS_USER) {
  
 let ShowRemarkType="1";
 let Notify_CompToGroup2="false";
+let Notify_NoCKFalse="false";
 let UseGroup2=false;
 if (process.env.SHOWREMARKTYPE) {
   ShowRemarkType = process.env.SHOWREMARKTYPE;
@@ -184,7 +185,9 @@ if (process.env.SHOWREMARKTYPE) {
 if (process.env.NOTIFY_COMPTOGROUP2) {
   Notify_CompToGroup2 = process.env.NOTIFY_COMPTOGROUP2;
 }
-
+if (process.env.NOTIFY_NOCKFALSE) {
+  Notify_NoCKFalse= process.env.NOTIFY_NOCKFALSE;
+}
 const {getEnvs} = require('./ql');
  
 const fs = require('fs');
@@ -204,17 +207,17 @@ let boolneedUpdate=false;
 async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By qinglong(ccwav Mod)') {
   console.log(`开始发送通知...`);
   try {
-	if(!desp){ 
-	    console.log(`通知内容为空，不推送`);
-		return;
-	}
-	
 	
 	if(text.indexOf("忘了种植") != -1){
 		console.log(`东东农场没有种植，不推送`);
 		return;
 	}		
-	
+	if(Notify_NoCKFalse=="true"){
+		if(text.indexOf("cookie已失效") != -1){
+			console.log(`cookie已失效，不推送`);
+			return;
+		}		
+	}
 	
 	//检查黑名单屏蔽通知  
     const notifySkipList = process.env.NOTIFY_SKIP_LIST ? process.env.NOTIFY_SKIP_LIST.split('&') : [];
