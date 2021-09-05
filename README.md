@@ -117,7 +117,14 @@ Update :
 	例子 :  export NOTIFY_COMPTOGROUP2=="true"
 	
 	企业微信配置了QYWX_AM和QYWX_AM2,则发送兑换通知时会推送到QYWX_AM2配置的企业微信.
+
+(6) NOTIFY_NOCKFALSE
+
+	屏蔽任务脚本的ck失效通知
+
+	例子 :  export NOTIFY_NOCKFALSE="true"	
 	
+	        执行东东农场等脚本时有CK失效也不会推送ck失效通知
 
 青龙拉库命令:
 
