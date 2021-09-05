@@ -89,7 +89,7 @@ Update :
 
 (5) NOTIFY_COMPTOGROUP2
 
-	东东农场 东东萌宠 京喜工厂 这三个任务接收到产品可以兑换通知时推送到群组2.
+	东东农场 东东萌宠  这两个任务接收到产品可以兑换通知时推送到群组2.
 	
 	例子 :  export NOTIFY_COMPTOGROUP2=="true"
 	
