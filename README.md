@@ -3,6 +3,8 @@
 注意: 
 
     ql.js 是jd_CheckCK.js和sendNotify.js的依赖,只要你使用了这两个脚本就一定保证放在同个文件夹里面.
+	
+	使用Ninjia要注意Extra.sh中把 cp sendNotify.js /ql/scripts/sendNotify.js 这一句删除，不然每次重启容器sendNotify.js都会被覆盖.
 
 脚本介绍:
 
@@ -108,9 +110,9 @@ Update :
 	
 	例子 :  export NOTIFY_SKIP_REMARK_LIST="京东CK检测"  
 
-(5) NOTIFY_COMPTOGROUP2
+(5) NOTIFY_COMPTOGROUP2 (需验证,Mark)
 
-	东东农场 东东萌宠  这两个任务接收到产品可以兑换通知时推送到群组2.
+	东东农场 东东萌宠 京喜工厂  这三个任务接收到产品可以兑换通知时推送到群组2.
 	
 	例子 :  export NOTIFY_COMPTOGROUP2=="true"
 	
