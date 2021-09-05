@@ -209,12 +209,12 @@ async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By qi
 		return;
 	}
 	
-	if(text=="东东农场"){
-		if(desp.indexOf("忘了种植") != -1){
-			console.log(`东东农场没有种植，不推送`);
-			return;
-		}		
-	}
+	
+	if(text.indexOf("忘了种植") != -1){
+		console.log(`东东农场没有种植，不推送`);
+		return;
+	}		
+	
 	
 	//检查黑名单屏蔽通知  
     const notifySkipList = process.env.NOTIFY_SKIP_LIST ? process.env.NOTIFY_SKIP_LIST.split('&') : [];
@@ -230,24 +230,10 @@ async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By qi
 	const notifyGroupList = process.env.NOTIFY_GROUP_LIST ? process.env.NOTIFY_GROUP_LIST.split('&') : [];
     const titleIndex2 = notifyGroupList.findIndex((item) => item === text);
 	if(Notify_CompToGroup2=="true"){
-		if(text=="东东农场"){
-			if(desp.indexOf("已可领取") != -1){
-				console.log(`东东农场领取信息推送至群组2`);
-				UseGroup2=true;
-			}		
-		}
-		if(text=="东东萌宠"){
-			if(desp.indexOf("已可领取") != -1){
-				console.log(`东东萌宠领取信息推送至群组2`);
-				UseGroup2=true;
-			}		
-		}
-		if(text=="京喜工厂"){
-			if(desp.indexOf("可以兑换商品") != -1){
-				console.log(`京喜工厂领取信息推送至群组2`);
-				UseGroup2=true;
-			}		
-		}
+		if(text.indexOf("已可领取") != -1){
+			console.log(`领取信息推送至群组2`);
+			UseGroup2=true;
+		}	
 	}
 	if (titleIndex2 !== -1) {
 		console.log(`${text} 在群组2推送名单中，初始化群组推送`);
