@@ -31,15 +31,28 @@
 
 自用的京东资产变动查询加强版
 
+Update :
+
 	Update : 20210905
 
 	更换领现金获取签名接口.
+	
+	新增拆分通知.
 
 	Update : 20210903
 
 	增加领现金金额显示.
 
+变量列表:
 
+(1) BEANCHANGE_PERSENT
+
+    拆分通知
+	
+    例子 :  export BEANCHANGE_PERSENT="10"  总共有22个账号
+	
+	结果会分成3条推送通知，1~10为第一条推送，2~20为第二条推送，剩余的为第三条推送
+	
 3.sendNotify.js 
 
 Update :
@@ -54,7 +67,9 @@ Update :
 
 	Update : 20210904:
 
-	新增一堆变量，要自己看好，我尽量写详细点:
+	新增一堆变量
+
+变量列表:
 
 (1) NOTIFY_SKIP_LIST
 
