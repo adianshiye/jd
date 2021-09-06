@@ -19,15 +19,15 @@
 
 	更换检测接口.
 
-	Update : 20210903
+变量列表:
 
-	增加变量显示正常CK:  export SHOWSUCCESSCK="true"
+	显示正常CK:  export SHOWSUCCESSCK="true"
 
-	增加变量永远通知CK状态:  export CKALWAYSNOTIFY="true"
+	永远通知CK状态:  export CKALWAYSNOTIFY="true"
 
-	增加变量停用自动启用CK:  export CKAUTOENABLE="false"
+	停用自动启用CK:  export CKAUTOENABLE="false"
 
-	增加变量不显示CK备注:  export CKREMARK="false"
+	不显示CK备注:  export CKREMARK="false"
 
 
 
@@ -102,7 +102,7 @@ Update :
 	
     export SHOWREMARKTYPE="3"    不做处理,效果是 :  账号名称：ccwav   
 	
-	export SHOWREMARKTYPE="4"    不做处理,效果是 :  账号名称：ccwav(代码玩家)
+	export SHOWREMARKTYPE="4"    效果是 :  账号名称：ccwav(代码玩家)
 	
 (4) NOTIFY_SKIP_REMARK_LIST 
 
@@ -112,11 +112,11 @@ Update :
 	
 	例子 :  export NOTIFY_SKIP_REMARK_LIST="京东CK检测"  
 
-(5) NOTIFY_COMPTOGROUP2 (需验证,Mark)
+(5) NOTIFY_COMPTOGROUP2 (京喜工厂已验证有效，其他需验证,能用记得告诉我)
 
 	东东农场 东东萌宠 京喜工厂  这三个任务接收到产品可以兑换通知时推送到群组2.
 	
-	例子 :  export NOTIFY_COMPTOGROUP2=="true"
+	例子 :  export NOTIFY_COMPTOGROUP2="true"
 	
 	企业微信配置了QYWX_AM和QYWX_AM2,则发送兑换通知时会推送到QYWX_AM2配置的企业微信.
 
