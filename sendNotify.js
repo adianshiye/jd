@@ -216,6 +216,10 @@ async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By qi
 		if(text.indexOf("cookie已失效") != -1){
 			console.log(`cookie已失效，不推送`);
 			return;
+		}
+		if(desp.indexOf("重新登录获取") != -1){
+			console.log(`cookie已失效，不推送`);
+			return;
 		}		
 	}
 	
