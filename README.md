@@ -35,6 +35,12 @@
 
 自用的京东资产变动查询加强版
 
+注意: 
+
+	如果你遇到TG报错，请参考https://github.com/ccwav/QLScript/issues/8
+	
+	如果你遇到Bark报错，请参考https://github.com/ccwav/QLScript/issues/7
+
 Update :
 
 	Update : 20210905
