@@ -402,6 +402,7 @@ async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By qi
 						$.Remark=$.nickName+"("+$.Remark+")";	
 					}					
 					//加个空格，因为有些通知账号前没有空格很丑-_-!!!
+					text = text.replace(new RegExp(`${$.UserName}|${$.nickName}`, 'gm'), " "+$.Remark);
 					desp = desp.replace(new RegExp(`${$.UserName}|${$.nickName}`, 'gm'), " "+$.Remark);
 					//console.log($.nickName+$.Remark);
 					
