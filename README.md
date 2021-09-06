@@ -118,7 +118,7 @@ Update :
 	
 	例子 :  export NOTIFY_SKIP_REMARK_LIST="京东CK检测"  
 
-(5) NOTIFY_COMPTOGROUP2 (京喜工厂已验证有效，其他需验证,能用记得告诉我)
+(5) NOTIFY_COMPTOGROUP2 
 
 	东东农场 东东萌宠 京喜工厂  这三个任务接收到产品可以兑换通知时推送到群组2.
 	
