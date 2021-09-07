@@ -31,8 +31,9 @@ let allMessage = '',
 let ShowSuccess = "false",
     CKAlwaysNotify = "false",
     CKAutoEnable = "true",
-    CKRemark = "true";
-
+    CKRemark = "true",
+	NoWarnError = "false";
+	
 if (process.env.SHOWSUCCESSCK) {
     ShowSuccess = process.env.SHOWSUCCESSCK;
 }
@@ -44,6 +45,9 @@ if (process.env.CKAUTOENABLE) {
 }
 if (process.env.CKREMARK) {
     CKRemark = process.env.CKREMARK;
+}
+if (process.env.CKNOWARNERROR) {
+    NoWarnError = process.env.CKNOWARNERROR;
 }
 
 !(async() => {
@@ -178,6 +182,11 @@ if (process.env.CKREMARK) {
         if (ShowSuccess == "true" && SuccessMessage) {
             allMessage += `👇👇👇👇👇有效账号👇👇👇👇👇\n` + SuccessMessage + `\n`;
         }
+		
+		if(NoWarnError== "true"){
+			OErrorMessage="NoWarn!";
+		}
+		
         if ($.isNode() && (EnableMessage || DisableMessage || OErrorMessage || CKAlwaysNotify == "true")) {
             await notify.sendNotify(`${$.name}`, `${allMessage}`, {
                 url: `https://bean.m.jd.com/beanDetail/index.action?resourceValue=bean`

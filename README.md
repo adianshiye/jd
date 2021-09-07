@@ -18,13 +18,15 @@
 	Update : 20210907
 	
 	检测通过以获取到别名为准.京东你别想再欺骗我!
+	
+	增加CKNOWARNERROR变量.
 
 	Update : 20210904
 
 	更换检测接口.
 
 变量列表:
-
+	
 	显示正常CK:  export SHOWSUCCESSCK="true"
 
 	永远通知CK状态:  export CKALWAYSNOTIFY="true"
@@ -32,6 +34,8 @@
 	停用自动启用CK:  export CKAUTOENABLE="false"
 
 	不显示CK备注:  export CKREMARK="false"
+	
+	服务器空数据等错误不触发通知:  export CKNOWARNERROR="true"
 
 
 
