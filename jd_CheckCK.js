@@ -184,7 +184,7 @@ if (process.env.CKNOWARNERROR) {
         }
 		
 		if(NoWarnError== "true"){
-			OErrorMessage="NoWarn!";
+			OErrorMessage="";
 		}
 		
         if ($.isNode() && (EnableMessage || DisableMessage || OErrorMessage || CKAlwaysNotify == "true")) {
