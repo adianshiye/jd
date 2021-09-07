@@ -436,9 +436,9 @@ async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By cc
 	  
   //提供6种通知
   if(strAuthor)
-	desp += '\n\n本通知 By '+strAuthor+"\n通知时间: "+GetDateTime(new Date())+") "; 
+	desp += '\n\n本通知 By '+strAuthor+"\n通知时间: "+GetDateTime(new Date()); 
   else
-	desp += author+"\n通知时间: "+GetDateTime(new Date())+") ";
+	desp += author+"\n通知时间: "+GetDateTime(new Date());
 
   await Promise.all([
     serverNotify(text, desp), //微信server酱
