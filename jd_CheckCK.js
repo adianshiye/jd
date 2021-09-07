@@ -44,12 +44,14 @@ if (process.env.CKREMARK) {
   for (let i = 0; i < envs.length; i++) {
     if (envs[i].value) {
       cookie = envs[i].value;	  
-      $.UserName = (cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])	 
+      $.UserName = (cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])	
+	  $.UserName2 = decodeURIComponent($.UserName); 	  
       $.index = i + 1;
       $.isLogin = true;
 	  $.error = '';
-      $.nickName = decodeURIComponent($.UserName); 
+      $.nickName = ""; 
 	  $.Remark = '';
+	  $.CheckTime = 1;
 	  if (CKRemark=="true"){
 		  $.Remark = envs[i].remarks||'';	  	  
 		  if($.Remark){
@@ -58,14 +60,38 @@ if (process.env.CKREMARK) {
 			  $.Remark="("+$.Remark+")";
 		  }	
 	  }	  
-	  console.log(`开始检测【京东账号${$.index}】${$.nickName}${$.Remark}....\n`);
+	  console.log(`开始检测【京东账号${$.index}】${$.UserName2} ${$.Remark}....\n`);
 	 
-      await TotalBean();      
+      await TotalBean(); 
+	  
 	  if ($.error){
 		  OErrorMessage+=$.error;
 		  continue;
 	  }
+	  if ($.isLogin) {
+		  if(!$.nickName){
+			  console.log(`别名都获取不到你跟我说没过期，我信你个鬼，20秒后再测一遍....\n`);
+		      await $.wait(20*1000)
+			  await TotalBean(); 
+			  $.CheckTime=2;
+				if ($.isLogin) {
+				  if(!$.nickName){
+					  console.log(`难道真的没有别名，不信，30秒后再测一遍....\n`);
+					  await $.wait(30*1000)
+					  await TotalBean(); 
+					  $.CheckTime=3;
+				  }
+				}
+		  }			  			  
+	  }
+	  
       if (!$.isLogin) {	
+			if($.CheckTime==2){
+				console.log(`狗东敢骗老子，继续禁用!\n`);
+			}
+			if($.CheckTime==3){
+				console.log(`狗东敢骗老子2次，继续禁用!\n`);
+			}
 		if (envs[i].status==0)
 		{
 		  const DisableCkBody = await DisableCk(envs[i]._id);
@@ -83,7 +109,11 @@ if (process.env.CKREMARK) {
 			ErrorMessage += `京东账号${$.index} : ${$.nickName || $.UserName}${$.Remark} 已失效,已禁用.\n`;
 		}
 	  } else {
+		  console.log(`成功获取到别名: ${$.nickName},Pass!\n`);
 		  if (envs[i].status==1){
+			  if($.CheckTime==3){
+				  console.log(`我信了，你这账号真的没有别名，通过!\n`);
+			  }
 			  if (CKAutoEnable=="true"){
 				  const EnableCkBody = await EnableCk(envs[i]._id);
 				  if (EnableCkBody.code == 200) {
@@ -97,9 +127,9 @@ if (process.env.CKREMARK) {
 					console.log(`京东账号${$.index} : ${$.nickName || $.UserName}${$.Remark} 已恢复，可手动启用!\n`);
 					EnableMessage += `京东账号${$.index} : ${$.nickName || $.UserName}${$.Remark} 已恢复，可手动启用.\n`;
 				}
-		  } else { 
-			console.log(`京东账号${$.index} : ${$.nickName || $.UserName}${$.Remark} 状态正常!\n`);
-			SuccessMessage += `京东账号${$.index} : ${$.nickName || $.UserName}${$.Remark}\n`;	
+		  } else {	  
+				console.log(`京东账号${$.index} : ${$.nickName || $.UserName}${$.Remark} 状态正常!\n`);
+				SuccessMessage += `京东账号${$.index} : ${$.nickName || $.UserName}${$.Remark}\n`;	
 		  }
 		}
 	  }
