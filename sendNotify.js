@@ -179,6 +179,7 @@ let ShowRemarkType="1";
 let Notify_CompToGroup2="false";
 let Notify_NoCKFalse="false";
 let UseGroup2=false;
+let strAuthor="";
 if (process.env.SHOWREMARKTYPE) {
   ShowRemarkType = process.env.SHOWREMARKTYPE;
 }
@@ -188,8 +189,11 @@ if (process.env.NOTIFY_COMPTOGROUP2) {
 if (process.env.NOTIFY_NOCKFALSE) {
   Notify_NoCKFalse= process.env.NOTIFY_NOCKFALSE;
 }
+if (process.env.NOTIFY_AUTHOR) {
+  strAuthor= process.env.NOTIFY_AUTHOR;
+}
+
 const {getEnvs} = require('./ql');
- 
 const fs = require('fs');
 let strCKFile = './CKName_cache.json';
 let Fileexists = fs.existsSync(strCKFile);
@@ -204,7 +208,7 @@ if (Fileexists) {
 }
 let tempAddCK={};
 let boolneedUpdate=false;
-async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By qinglong(ccwav Mod)') {
+async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By ccwav Mod') {
   console.log(`开始发送通知...`);
   try {
 	
@@ -431,7 +435,11 @@ async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By qi
   }
 	  
   //提供6种通知
-  desp += author; //增加作者信息，防止被贩卖等
+  if(strAuthor)
+	desp += '\n\n本通知 By '+strAuthor+" ("+GetDateTime(new Date())+") "; 
+  else
+	desp += author+" ("+GetDateTime(new Date())+") "; 
+
   await Promise.all([
     serverNotify(text, desp), //微信server酱
     pushPlusNotify(text, desp), //pushplus(推送加)
@@ -1012,6 +1020,39 @@ function pushPlusNotify(text, desp) {
       resolve();
     }
   });
+}
+
+function GetDateTime(date) {   
+    
+	var timeString="";
+	
+    var timeString = date.getFullYear() + "-" ;
+	if ((date.getMonth() + 1)<10)
+		timeString +="0"+(date.getMonth() + 1) + "-";		
+	else
+        timeString +=(date.getMonth() + 1) + "-";	
+	
+	if ((date.getDate() )<10)
+		timeString +="0"+date.getDate()+ " ";		
+	else
+        timeString +=date.getDate()+ " ";	
+    
+	if ((date.getHours() )<10)
+		timeString +="0"+date.getHours()+ ":";		
+	else
+        timeString +=date.getHours()+ ":";
+	
+	if ((date.getMinutes() )<10)
+		timeString +="0"+date.getMinutes()+ ":";		
+	else
+        timeString +=date.getMinutes()+ ":";
+	
+	if ((date.getSeconds() )<10)
+		timeString +="0"+date.getSeconds();		
+	else
+        timeString +=date.getSeconds();
+			
+    return timeString;
 }
 
 function GetnickName() {
