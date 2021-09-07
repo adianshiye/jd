@@ -180,9 +180,7 @@ let Notify_CompToGroup2="false";
 let Notify_NoCKFalse="false";
 let UseGroup2=false;
 let strAuthor="";
-if (process.env.SHOWREMARKTYPE) {
-  ShowRemarkType = process.env.SHOWREMARKTYPE;
-}
+
 if (process.env.NOTIFY_COMPTOGROUP2) {
   Notify_CompToGroup2 = process.env.NOTIFY_COMPTOGROUP2;
 }
@@ -211,7 +209,11 @@ let boolneedUpdate=false;
 async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By ccwav Mod') {
   console.log(`开始发送通知...`);
   try {
-	
+	  
+	if (process.env.SHOWREMARKTYPE) {
+	  ShowRemarkType = process.env.SHOWREMARKTYPE;
+	}
+
 	if(text.indexOf("忘了种植") != -1){
 		console.log(`东东农场没有种植，不推送`);
 		return;
@@ -337,7 +339,7 @@ async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By cc
 	const notifySkipRemarkList = process.env.NOTIFY_SKIP_REMARK_LIST ? process.env.NOTIFY_SKIP_REMARK_LIST.split('&') : [];
     const titleIndex3 = notifySkipRemarkList.findIndex((item) => item === text);
 	
-	if(text=="京东到家果园互助码:"){
+	if(text=="京东到家果园互助码:"){	  
 	  ShowRemarkType="3";	
 	  if(desp){
 		  var arrTemp = desp.split(",");
@@ -353,7 +355,7 @@ async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By cc
 			  desp+='\n'+'\n'+"ccwav格式化后的互助码:"+'\n'+allCode;
 		  }
 	  }
-	}	
+	}
 	
     if (ShowRemarkType!="3" &&titleIndex3 == -1) {
 		console.log("正在处理账号Remark.....");
