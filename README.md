@@ -66,6 +66,10 @@ Update :
 3.sendNotify.js 
 
 Update :
+	
+	Update : 20210907:
+	
+	加了时间戳,增加NOTIFY_AUTHOR变量.
 
 	Update : 20210905:	
 	
@@ -133,6 +137,13 @@ Update :
 	例子 :  export NOTIFY_NOCKFALSE="true"	
 	
 	        执行东东农场等脚本时有CK失效也不会推送ck失效通知
+
+(6) NOTIFY_AUTHOR			
+	例子 :  export NOTIFY_AUTHOR="测试人"
+			
+			通知底部显示 本通知 By 测试人 (2021-09-07 14:14:51)
+			
+			没错，我加了时间戳
 
 青龙拉库命令:
 
