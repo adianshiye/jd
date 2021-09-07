@@ -353,18 +353,14 @@ async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By cc
 			  desp+='\n'+'\n'+"ccwav格式化后的互助码:"+'\n'+allCode;
 		  }
 	  }
-	}
+	}	
 	
     if (ShowRemarkType!="3" &&titleIndex3 == -1) {
 		console.log("正在处理账号Remark.....");
 		//开始读取青龙变量列表
 		const envs = await getEnvs();
 		if (envs[0]) {	
-			for (let i = 0; i < envs.length; i++) {				
-				if (envs[i].status==1){
-					//账号状态为1是禁用，跳过
-					continue;
-				}
+			for (let i = 0; i < envs.length; i++) {
 				cookie = envs[i].value;
 				$.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
 				$.nickName=""				
@@ -374,26 +370,29 @@ async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By cc
 				//判断有没有Remark，没有搞个屁，有的继续
 				if($.Remark){
 					//先查找缓存文件中有没有这个账号，有的话直接读取别名
-					if (TempCK) {
-						for (let j = 0; j < TempCK.length; j++) {
-						  if (TempCK[j].pt_pin==$.UserName){
-							$.FoundPin=TempCK[j].pt_pin;
-							$.nickName=TempCK[j].nickName;	
-						  }
-						}
-					  }					
-					if(!$.FoundPin){
-						//缓存文件中有没有这个账号，调用京东接口获取别名,并更新缓存文件
-						await GetnickName();
-						console.log("好像是新账号，从接口获取别名"+$.nickName);
-						tempAddCK={
-							"pt_pin": $.UserName,
-							"nickName": $.nickName
-							};
-						TempCK.push(tempAddCK);
-						//标识，需要更新缓存文件
-						boolneedUpdate=true;
-					}					
+					if (envs[i].status==0){
+						if (TempCK) {
+							for (let j = 0; j < TempCK.length; j++) {
+							  if (TempCK[j].pt_pin==$.UserName){
+								$.FoundPin=TempCK[j].pt_pin;
+								$.nickName=TempCK[j].nickName;	
+							  }
+							}
+						  }					
+						if(!$.FoundPin){
+							//缓存文件中有没有这个账号，调用京东接口获取别名,并更新缓存文件
+							await GetnickName();
+							console.log("好像是新账号，从接口获取别名"+$.nickName);
+							tempAddCK={
+								"pt_pin": $.UserName,
+								"nickName": $.nickName
+								};
+							TempCK.push(tempAddCK);
+							//标识，需要更新缓存文件
+							boolneedUpdate=true;
+						}	
+					}
+					
 					$.nickName=$.nickName||$.UserName;
 					//这是为了处理ninjia的remark格式
 					$.Remark = $.Remark.replace("remark=","");
