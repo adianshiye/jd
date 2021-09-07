@@ -200,7 +200,7 @@ function TotalBean() {
               return;
             }
             if (data['retcode'] === "0" && data.data && data.data.hasOwnProperty("userInfo")) {
-			  $.nickName = (data.data.userInfo.baseInfo.nickname) || decodeURIComponent($.UserName);
+			  $.nickName = (data.data.userInfo.baseInfo.nickname) ;
             } else {
               $.nickName = decodeURIComponent($.UserName);
 			  console.log("Debug Code:"+data['retcode']);
