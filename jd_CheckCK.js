@@ -94,9 +94,10 @@ if (process.env.CKNOWARNERROR) {
                     $.CheckTime = 2;
                     if ($.isLogin) {
                         if (!$.nickName) {
-                            console.log(`难道真的没有别名，不信，30秒后再测一遍....\n`);
-                            await $.wait(30 * 1000)
-                            await TotalBean();
+                            console.log(`还是不信，10秒后更换接口再测一遍....\n`);
+                            await $.wait(10 * 1000)
+							//更换接口测试
+                            await isLoginByX1a0He();
                             $.CheckTime = 3;
                         }
                     }
@@ -184,7 +185,7 @@ if (process.env.CKNOWARNERROR) {
         }
 		
 		if(NoWarnError== "true"){
-			OErrorMessage="";
+			OErrorMessage="NoWarn!";
 		}
 		
         if ($.isNode() && (EnableMessage || DisableMessage || OErrorMessage || CKAlwaysNotify == "true")) {
@@ -234,6 +235,7 @@ function TotalBean() {
                             $.error = `${$.nickName} :` + `服务器返回未知状态，不做变动\n`;
                         }
                     } else {
+						$.nickName = decodeURIComponent($.UserName);
                         $.log('京东服务器返回空数据');
                         $.error = `${$.nickName} :` + `服务器返回空数据，不做变动\n`;
                     }
@@ -247,7 +249,38 @@ function TotalBean() {
         })
     })
 }
-
+function isLoginByX1a0He(){
+    return new Promise((resolve) => {
+        const options = {
+            url: 'https://plogin.m.jd.com/cgi-bin/ml/islogin',
+            headers: {
+                "Cookie": cookie,
+                "referer": "https://h5.m.jd.com/",
+                "User-Agent": "jdapp;iPhone;10.1.2;15.0;network/wifi;Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1",
+            },
+        }
+        $.get(options, (err, resp, data) => {
+            try{
+                if(data){
+                    data = JSON.parse(data);
+                    if(data.islogin === "1"){
+                        console.log(`使用X1a0He写的接口加强检测: Cookie有效\n`)
+                    } else if(data.islogin === "0"){
+                        $.isLogin = false;
+						console.log(`使用X1a0He写的接口加强检测: Cookie无效\n`)
+                    } else {
+                        console.log(`使用X1a0He写的接口加强检测: 未知返回，不作变更...\n`)
+                        $.error= `使用X1a0He写的接口加强检测: 未知返回...\n`
+                    }
+                }
+            } catch(e){
+                console.log(e);
+            } finally{
+                resolve();
+            }
+        });
+    });
+}
 function jsonParse(str) {
     if (typeof str == "string") {
         try {
