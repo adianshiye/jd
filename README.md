@@ -112,7 +112,7 @@ Update :
 	
     例子 :  export NOTIFY_GROUP_LIST="京东CK检测&京东资产变动&Ninja 运行通知"
 	
-	企业微信配置了QYWX_AM和QYWX_AM2,则执行京东资产变动时会推送到QYWX_AM2配置的企业微信.
+	假如企业微信配置了QYWX_AM和QYWX_AM2,则执行京东资产变动时会推送到QYWX_AM2配置的企业微信.
 	
 (3) SHOWREMARKTYPE
 
@@ -138,9 +138,11 @@ Update :
 
 	东东农场 东东萌宠 京喜工厂  这三个任务接收到产品可以兑换通知时推送到群组2.
 	
+	(PS:例子使用了企业微信的变量QYWX_AM,实际是所有推送变量后加2都会有效.)
+	
 	例子 :  export NOTIFY_COMPTOGROUP2="true"
 	
-	企业微信配置了QYWX_AM和QYWX_AM2,则发送兑换通知时会推送到QYWX_AM2配置的企业微信.
+	假如企业微信配置了QYWX_AM和QYWX_AM2,则发送兑换通知时会推送到QYWX_AM2配置的企业微信.
 
 (6) NOTIFY_NOCKFALSE
 
@@ -148,14 +150,13 @@ Update :
 
 	例子 :  export NOTIFY_NOCKFALSE="true"	
 	
-	        执行东东农场等脚本时有CK失效也不会推送ck失效通知
+	        执行所有脚本时，如果有单独推送CK失效的请求也不会推送失效通知
 
-(6) NOTIFY_AUTHOR			
+(6) NOTIFY_AUTHOR	
+		
 	例子 :  export NOTIFY_AUTHOR="测试人"
 			
-			通知底部显示 本通知 By 测试人 (2021-09-07 14:14:51)
-			
-			没错，我加了时间戳
+			通知底部显示 本通知 By 测试人
 
 青龙拉库命令:
 
