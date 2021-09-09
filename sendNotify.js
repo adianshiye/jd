@@ -181,16 +181,6 @@ let Notify_NoCKFalse="false";
 let UseGroup2=false;
 let strAuthor="";
 
-if (process.env.NOTIFY_COMPTOGROUP2) {
-  Notify_CompToGroup2 = process.env.NOTIFY_COMPTOGROUP2;
-}
-if (process.env.NOTIFY_NOCKFALSE) {
-  Notify_NoCKFalse= process.env.NOTIFY_NOCKFALSE;
-}
-if (process.env.NOTIFY_AUTHOR) {
-  strAuthor= process.env.NOTIFY_AUTHOR;
-}
-
 const {getEnvs} = require('./ql');
 const fs = require('fs');
 let strCKFile = './CKName_cache.json';
@@ -209,7 +199,16 @@ let boolneedUpdate=false;
 async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By ccwav Mod') {
   console.log(`开始发送通知...`);
   try {
-	  
+	UseGroup2=false;
+	if (process.env.NOTIFY_COMPTOGROUP2) {
+	  Notify_CompToGroup2 = process.env.NOTIFY_COMPTOGROUP2;
+	}
+	if (process.env.NOTIFY_NOCKFALSE) {
+	  Notify_NoCKFalse= process.env.NOTIFY_NOCKFALSE;
+	}
+	if (process.env.NOTIFY_AUTHOR) {
+	  strAuthor= process.env.NOTIFY_AUTHOR;
+	}
 	if (process.env.SHOWREMARKTYPE) {
 	  ShowRemarkType = process.env.SHOWREMARKTYPE;
 	}
