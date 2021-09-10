@@ -78,6 +78,9 @@ Update :
 3.sendNotify.js 
 
 Update :
+	Update : 20210910:
+	
+	增加NOTIFY_NOLOGINSUCCESS变量,屏蔽青龙登陆成功通知，登陆失败不屏蔽.
 	
 	Update : 20210907:
 	
@@ -158,6 +161,12 @@ Update :
 			
 			通知底部显示 本通知 By 测试人
 
+(7) NOTIFY_NOLOGINSUCCESS
+
+	例子 :  export NOTIFY_NOLOGINSUCCESS="true" 
+			
+			屏蔽青龙登陆成功通知，登陆失败不屏蔽.
+	
 青龙拉库命令:
 
 	不包含sendNotify:
