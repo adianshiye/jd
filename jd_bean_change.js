@@ -189,9 +189,9 @@ async function showMsg() {
 			allReceiveMessage+=`【账号${$.index} ${$.nickName || $.UserName}】${$.JdFarmProdName} (东东农场)\n`;			
 		} else {
 			if($.JdwaterD!='Infinity' && $.JdwaterD!='-Infinity'){
-			  ReturnMessage+=`【东东农场】${$.JdFarmProdName}(${(($.JdtreeEnergy / $.JdtreeTotalEnergy) * 100).toFixed(2)}%,${$.JdwaterD}天)\n`;			 
+			  ReturnMessage+=`【东东农场】${$.JdFarmProdName}(${(($.JdtreeEnergy / $.JdtreeTotalEnergy) * 100).toFixed(0)}%,${$.JdwaterD}天)\n`;			 
 			} else {
-			  ReturnMessage+=`【东东农场】${$.JdFarmProdName}(${(($.JdtreeEnergy / $.JdtreeTotalEnergy) * 100).toFixed(2)}%)\n`;
+			  ReturnMessage+=`【东东农场】${$.JdFarmProdName}(${(($.JdtreeEnergy / $.JdtreeTotalEnergy) * 100).toFixed(0)}%)\n`;
 			
 			}
 		}
@@ -222,8 +222,8 @@ async function showMsg() {
   if (initPetTownRes.code === '0' && initPetTownRes.resultCode === '0' && initPetTownRes.message === 'success') {
       $.petInfo = initPetTownRes.result;
 	  if (response.resultCode === '0') {
-		ReturnMessage += `【东东萌宠】${$.petInfo.goodsInfo.goodsName},`;
-		ReturnMessage += `(${response.result.medalPercent}%,${response.result.medalNum}/${response.result.medalNum+response.result.needCollectMedalNum}块)\n`;
+		ReturnMessage += `【东东萌宠】${$.petInfo.goodsInfo.goodsName}`;
+		ReturnMessage += `(${(response.result.medalPercent).toFixed(0)}%,${response.result.medalNum}/${response.result.medalNum+response.result.needCollectMedalNum}块)\n`;
 		//ReturnMessage += `          已有${response.result.medalNum}块勋章，还需${response.result.needCollectMedalNum}块\n`;
 
 	  }
@@ -925,7 +925,7 @@ function getJxFactory() {
                                     $.commodityDimId = production.commodityDimId;
                                     // subTitle = data.user.pin;
                                     await GetCommodityDetails();//获取已选购的商品信息
-                                    infoMsg = `${$.jxProductName}(${((production.investedElectric / production.needElectric) * 100).toFixed(2)}%`;
+                                    infoMsg = `${$.jxProductName}(${((production.investedElectric / production.needElectric) * 100).toFixed(0)}%`;
                                     if (production.investedElectric >= production.needElectric) {
                                         if (production['exchangeStatus'] === 1) {
                                             infoMsg = `${$.jxProductName}已可兑换`;
@@ -1053,7 +1053,7 @@ async function getDdFactoryInfo() {
 								if (couponCount==0){
 									infoMsg = `${name} 没货了,死了这条心吧!`
 								} else {									
-									infoMsg = `${name}(${((remainScore * 1 + useScore * 1) / (totalScore * 1)* 100).toFixed(2)}%,剩${couponCount})`
+									infoMsg = `${name}(${((remainScore * 1 + useScore * 1) / (totalScore * 1)* 100).toFixed(0)}%,剩${couponCount})`
 								}
                                 if (((remainScore * 1 + useScore * 1) >= totalScore * 1 + 100000) && (couponCount * 1 > 0)) {
                                     // await jdfactory_addEnergy();
