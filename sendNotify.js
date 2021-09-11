@@ -181,7 +181,6 @@ let Notify_NoCKFalse="false";
 let Notify_NoLoginSuccess="false";
 let UseGroup2=false;
 let strAuthor="";
-
 const {getEnvs} = require('./ql');
 const fs = require('fs');
 let strCKFile = './CKName_cache.json';
@@ -245,24 +244,47 @@ async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By cc
 	
 	const notifyGroupList = process.env.NOTIFY_GROUP_LIST ? process.env.NOTIFY_GROUP_LIST.split('&') : [];
     const titleIndex2 = notifyGroupList.findIndex((item) => item === text);
-	if(Notify_CompToGroup2=="true"){
-		if(text.indexOf("已可领取") != -1){
-			console.log(`领取信息推送至群组2`);
-			UseGroup2=true;
-		}	
-		if(text=="京喜工厂"){
-			if(desp.indexOf("元造进行兑换") != -1){
-				console.log(`京喜工厂领取信息推送至群组2`);
-				UseGroup2=true;
-			}		
+	var strTitle="";
+	
+	if(text.indexOf("已可领取") != -1){
+		if(desp.indexOf("水果") != -1){			
+			strTitle="东东农场";
+		} else {
+			strTitle="东东萌宠";
 		}
+			
+	}	
+	
+	if(text=="京喜工厂"){			
+		if(desp.indexOf("元造进行兑换") != -1){
+			strTitle="京喜工厂";								
+		}		
 	}
-	if(Notify_NoLoginSuccess=="true"){
-		if(text=="登陆通知"){
-			if(desp.indexOf("登陆成功") != -1){
-				console.log(`登陆成功不推送`);
-				return;
-			}		
+	
+	const notifyRemindList = process.env.NOTIFY_NOREMIND ? process.env.NOTIFY_NOREMIND.split('&') : [];
+    titleIndex = notifyRemindList.findIndex((item) => item === strTitle);
+	
+	if (titleIndex !== -1) {
+      console.log(`${text} 在领取信息黑名单中，已跳过推送`);
+      return;
+    }
+	
+	if(strTitle && Notify_CompToGroup2=="true"){
+		console.log(`${strTitle}领取信息推送至群组2`);
+		UseGroup2=true;
+	}
+	
+	titleIndex = Notify_CompToGroup2.findIndex((item) => item === strTitle);	
+	if(titleIndex !== -1){
+		console.log(`${strTitle}领取信息推送至群组2`);
+		UseGroup2=true;
+	}
+	
+	
+	if(Notify_NoLoginSuccess=="true"){		
+		if(desp.indexOf("登陆成功") != -1){
+			console.log(`登陆成功不推送`);
+			return;
 		}
 	}
 	

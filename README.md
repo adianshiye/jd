@@ -137,15 +137,23 @@ Update :
 	
 	例子 :  export NOTIFY_SKIP_REMARK_LIST="京东CK检测"  
 
-(5) NOTIFY_COMPTOGROUP2 
+(5) NOTIFY_COMPTOGROUP2 和 NOTIFY_NOREMIND (待验证)
 
-	东东农场 东东萌宠 京喜工厂  这三个任务接收到产品可以兑换通知时推送到群组2.
+	用法1 : export NOTIFY_COMPTOGROUP2="true"	
+
+		    东东农场 东东萌宠 京喜工厂  这三个任务接收到产品可以兑换通知时推送到群组2.
+			
+	用法2 : export NOTIFY_COMPTOGROUP2="东东农场&东东萌宠&京喜工厂"	
+
+		    东东农场 东东萌宠 京喜工厂的兑换通知推送到群组2,可自行删减.		
+			
+	用法3 : export NOTIFY_NOREMIND="东东农场&东东萌宠&京喜工厂"	
+
+		    屏蔽东东农场 东东萌宠 京喜工厂的兑换通知,可自行删减.		
+	
+	群组2的介绍:假如企业微信配置了QYWX_AM和QYWX_AM2,则发送兑换通知时会推送到QYWX_AM2配置的企业微信.
 	
 	(PS:例子使用了企业微信的变量QYWX_AM,实际是所有推送变量后加2都会有效.)
-	
-	例子 :  export NOTIFY_COMPTOGROUP2="true"
-	
-	假如企业微信配置了QYWX_AM和QYWX_AM2,则发送兑换通知时会推送到QYWX_AM2配置的企业微信.
 
 (6) NOTIFY_NOCKFALSE
 
