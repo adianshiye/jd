@@ -2,7 +2,7 @@
 cron "30 10,22 * * *" jd_bean_change.js, tag:资产变化强化版by-ccwav
 */
 
-//更新by ccwav,20210902
+//更新by ccwav,20210912
 
 const $ = new Env('京东资产变动');
 const notify = $.isNode() ? require('./sendNotify') : '';
@@ -147,9 +147,9 @@ async function showMsg() {
 	}
   ReturnMessage+=`\n`;
   
-  if($.expirejingdou!=0){
-	   ReturnMessage+=`【今日过期】${$.expirejingdou}京豆\n`;
-  }
+  //if($.expirejingdou!=0){
+	   //ReturnMessage+=`【今日过期】${$.expirejingdou}京豆\n`;
+  //}
   
   
   ReturnMessage+=`【昨日收支】收入${$.incomeBean}京豆`;
@@ -287,8 +287,10 @@ async function bean() {
       $.todayOutcomeBean += Number(item.amount);
     }
   }
-  await queryexpirejingdou();//过期京豆
-  $.todayOutcomeBean=$.todayOutcomeBean+$.expirejingdou;
+  $.todayOutcomeBean=-$.todayOutcomeBean;
+  $.expenseBean=-$.expenseBean;
+  //await queryexpirejingdou();//过期京豆
+  //$.todayOutcomeBean=$.todayOutcomeBean+$.expirejingdou;
   await redPacket();//过期红包
   // console.log(`昨日收入：${$.incomeBean}个京豆 🐶`);
   // console.log(`昨日支出：${$.expenseBean}个京豆 🐶`)
