@@ -200,6 +200,7 @@ async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By cc
   console.log(`开始发送通知...`);
   try {
 	UseGroup2=false;
+	strTitle="";
 	if (process.env.NOTIFY_COMPTOGROUP2) {
 	  Notify_CompToGroup2 = process.env.NOTIFY_COMPTOGROUP2;
 	}
