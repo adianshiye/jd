@@ -162,7 +162,12 @@ async function showMsg() {
   	
   
   if(typeof $.JDEggcnt !== "undefined"){
-	ReturnMessage+=`【京喜牧场】${$.JDEggcnt}枚鸡蛋\n`;
+	  if($.JDEggcnt==0){
+		 ReturnMessage+=`【京喜牧场】未开通或提示火爆.\n`; 
+	  }else{
+		 ReturnMessage+=`【京喜牧场】${$.JDEggcnt}枚鸡蛋\n`;
+	  }
+	
   } 
   if(typeof $.JDtotalcash !== "undefined"){
 	ReturnMessage+=`【极速金币】${$.JDtotalcash}金币(≈${($.JDtotalcash / 10000).toFixed(2)}元)\n`;
