@@ -174,7 +174,7 @@ if (process.env.PUSH_PLUS_USER) {
  * @param author 作者仓库等信息  例：`本通知 By：https://github.com/whyour/qinglong`
  * @returns {Promise<unknown>}
  */
- 
+let strTitle="";
 let ShowRemarkType="1";
 let Notify_CompToGroup2="false";
 let Notify_NoCKFalse="false";
@@ -233,7 +233,7 @@ async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By cc
 	
 	//检查黑名单屏蔽通知  
     const notifySkipList = process.env.NOTIFY_SKIP_LIST ? process.env.NOTIFY_SKIP_LIST.split('&') : [];
-    const titleIndex = notifySkipList.findIndex((item) => item === text);
+    let titleIndex = notifySkipList.findIndex((item) => item === text);
 
     if (titleIndex !== -1) {
       console.log(`${text} 在推送黑名单中，已跳过推送`);
@@ -244,15 +244,14 @@ async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By cc
 	
 	const notifyGroupList = process.env.NOTIFY_GROUP_LIST ? process.env.NOTIFY_GROUP_LIST.split('&') : [];
     const titleIndex2 = notifyGroupList.findIndex((item) => item === text);
-	var strTitle="";
 	
-	if(text.indexOf("已可领取") != -1){
+	
+	if(text.indexOf("已可领取") != -1){		
 		if(desp.indexOf("水果") != -1){			
 			strTitle="东东农场";
 		} else {
 			strTitle="东东萌宠";
-		}
-			
+		}	
 	}	
 	
 	if(text=="京喜工厂"){			
@@ -261,25 +260,27 @@ async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By cc
 		}		
 	}
 	
-	const notifyRemindList = process.env.NOTIFY_NOREMIND ? process.env.NOTIFY_NOREMIND.split('&') : [];
-    titleIndex = notifyRemindList.findIndex((item) => item === strTitle);
-	
-	if (titleIndex !== -1) {
-      console.log(`${text} 在领取信息黑名单中，已跳过推送`);
-      return;
-    }
-	
+	if(strTitle){
+		const notifyRemindList = process.env.NOTIFY_NOREMIND ? process.env.NOTIFY_NOREMIND.split('&') : [];
+		titleIndex = notifyRemindList.findIndex((item) => item === strTitle);
+		
+		if (titleIndex !== -1) {
+		  console.log(`${text} 在领取信息黑名单中，已跳过推送`);
+		  return;
+		}
+	}
 	if(strTitle && Notify_CompToGroup2=="true"){
 		console.log(`${strTitle}领取信息推送至群组2`);
 		UseGroup2=true;
 	}
-	
-	titleIndex = Notify_CompToGroup2.findIndex((item) => item === strTitle);	
-	if(titleIndex !== -1){
-		console.log(`${strTitle}领取信息推送至群组2`);
-		UseGroup2=true;
+	if(Notify_CompToGroup2!="true" && Notify_CompToGroup2!="false"){
+		const notifyCompToGroup2 = process.env.Notify_CompToGroup2 ? process.env.Notify_CompToGroup2.split('&') : [];
+		titleIndex = notifyCompToGroup2.findIndex((item) => item === strTitle);	
+		if(titleIndex !== -1){
+			console.log(`${strTitle}领取信息推送至群组2`);
+			UseGroup2=true;
+		}
 	}
-	
 	
 	if(Notify_NoLoginSuccess=="true"){		
 		if(desp.indexOf("登陆成功") != -1){
