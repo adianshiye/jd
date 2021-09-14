@@ -59,7 +59,7 @@ if (process.env.CKNOWARNERROR) {
         return;
     }
 
-    for (let i = 0; i < envs.length; i++) {
+    for (let i = 0; i < envs.length; i++) {		
         if (envs[i].value) {
             cookie = envs[i].value;
             $.UserName = (cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
@@ -218,7 +218,8 @@ function TotalBean() {
             try {
                 if (err) {
                     $.logErr(err)
-                    $.error = `${$.name} :` + `${JSON.stringify(err)}\n`;
+					$.nickName = decodeURIComponent($.UserName);
+                    $.error = `${$.nickName} :` + `${JSON.stringify(err)}\n`;
                 } else {
                     if (data) {
                         data = JSON.parse(data);
@@ -241,8 +242,9 @@ function TotalBean() {
                     }
                 }
             } catch (e) {
+				$.nickName = decodeURIComponent($.UserName);
                 $.logErr(e)
-                $.error = `检测出错，不做变动\n`;
+                $.error = `${$.nickName} : 检测出错，不做变动\n`;
             } finally {
                 resolve();
             }
