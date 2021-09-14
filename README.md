@@ -1,13 +1,16 @@
 # QLScript
 
-注意: 
+注意事项: 
 
-    ql.js 是jd_CheckCK.js和sendNotify.js的依赖,只要你使用了这两个脚本就一定保证放在同个文件夹里面.
+    ql.js 是jd_CheckCK.js和sendNotify.js的依赖,
 	
-	使用Ninjia要注意Extra.sh中把 cp sendNotify.js /ql/scripts/sendNotify.js 这一句删除，不然每次重启容器sendNotify.js都会被覆盖.
+	只要你使用了这两个脚本就一定保证放在同个文件夹里面.
+	
+	使用Ninjia要注意Extra.sh中把 cp sendNotify.js /ql/scripts/sendNotify.js 这一句删除，
+	
+	不然每次重启容器sendNotify.js都会被覆盖.
 
 脚本介绍:
-
 
 1.jd_CheckCK.js
 
@@ -15,19 +18,7 @@
 
 当有自动禁用或自动启用事件发生才会发送通知.如果要每次都通知则需设定变量.
 
-	Update : 20210908
-	
-	调用X1a0He写的接口加强验证.Thanks.
-	
-	Update : 20210907
-	
-	检测通过以获取到别名为准.京东你别想再欺骗我!
-	
-	增加CKNOWARNERROR变量.
-
-	Update : 20210904
-
-	更换检测接口.
+本脚本最后一次重试检测调用X1a0He写的接口加强验证.Thanks.
 
 变量列表:
 	
@@ -41,8 +32,6 @@
 	
 	服务器空数据等错误不触发通知:  export CKNOWARNERROR="true"
 
-
-
 2.jd_bean_change.js
 
 自用的京东资产变动查询加强版
@@ -52,18 +41,6 @@
 	如果你遇到TG报错，请参考https://github.com/ccwav/QLScript/issues/8
 	
 	如果你遇到Bark报错，请参考https://github.com/ccwav/QLScript/issues/7
-
-Update :
-
-	Update : 20210905
-
-	更换领现金获取签名接口.
-	
-	新增拆分通知.
-
-	Update : 20210903
-
-	增加领现金金额显示.
 
 变量列表:
 
@@ -76,27 +53,6 @@ Update :
 	结果会分成3条推送通知，1~10为第一条推送，11~20为第二条推送，剩余的为第三条推送
 	
 3.sendNotify.js 
-
-Update :
-	Update : 20210910:
-	
-	增加NOTIFY_NOLOGINSUCCESS变量,屏蔽青龙登陆成功通知，登陆失败不屏蔽.
-	
-	Update : 20210907:
-	
-	加了时间戳,增加NOTIFY_AUTHOR变量.
-
-	Update : 20210905:	
-	
-	格式化京东到家果园互助码，原内容后面显示，去除无用的互助码.
-	
-	永远屏蔽东东农场忘了种植水果的烦人通知,永远且没有开关.....
-	
-	新增NOTIFY_COMPTOGROUP2，具体用法看下方说明
-
-	Update : 20210904:
-
-	新增一堆变量
 
 变量列表:
 
