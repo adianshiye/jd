@@ -130,6 +130,12 @@
 	例子 :  export NOTIFY_NOLOGINSUCCESS="true" 
 			
 			屏蔽青龙登陆成功通知，登陆失败不屏蔽.
+
+4.jd_speed_sign_Part1~jd_speed_sign_Part3
+
+	简单粗暴的极速版的分任务版，将总ck数除以3后平均分配成三个任务同时执行.
+	
+	例子 : 有24个ck，则Part1 执行1~8,Part2 执行9~16，Part3 执行17以后剩下的所有ck.
 	
 青龙拉库命令:
 
