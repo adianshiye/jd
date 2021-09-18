@@ -220,13 +220,13 @@ async function showMsg() {
             }
         } else {
             if ($.treeState === 0) {
-                allWarnMessage += `【账号${$.index} ${$.nickName || $.UserName}】未种植水果! (东东农场)\n`;
-                ReturnMessage += `【东东农场】未执行新的种植!\n`;
+                allWarnMessage += `【账号${$.index} ${$.nickName || $.UserName}】水果领取后未重新种植! (东东农场)\n`;
+                //ReturnMessage += `【东东农场】水果领取后未重新种植!\n`;
             } else if ($.treeState === 1) {
                 ReturnMessage += `【东东农场】${$.JdFarmProdName}种植中...\n`;
             } else {
                 allWarnMessage += `【账号${$.index} ${$.nickName || $.UserName}】状态异常! (东东农场)\n`;
-                ReturnMessage += `【东东农场】${$.JdFarmProdName}状态异常${$.treeState}...\n`;
+                //ReturnMessage += `【东东农场】${$.JdFarmProdName}状态异常${$.treeState}...\n`;
             }
         }
     }
@@ -252,7 +252,7 @@ async function showMsg() {
             ReturnMessage += `【东东萌宠】${$.petInfo.goodsInfo.goodsName}已可领取!\n`;
             allReceiveMessage += `【账号${$.index} ${$.nickName || $.UserName}】${$.petInfo.goodsInfo.goodsName}可以兑换了! (东东萌宠)\n`;
         } else if ($.petInfo.petStatus === 6) {
-            ReturnMessage += `【东东萌宠】未选择物品!\n`;
+            //ReturnMessage += `【东东萌宠】未选择物品!\n`;
             allWarnMessage += `【账号${$.index} ${$.nickName || $.UserName}】未选择物品! (东东萌宠)\n`;
         } else if (response.resultCode === '0') {
             ReturnMessage += `【东东萌宠】${$.petInfo.goodsInfo.goodsName}`;
