@@ -171,7 +171,7 @@ async function showMsg() {
             $.levelName = $.levelName.substring(0, 2);
 
         if ($.levelName == "注册")
-            $.levelName = `😩普通`;
+            $.levelName = `😊普通`;
 		
 		if ($.levelName == "钻石")
 			$.levelName =`💎钻石`;
