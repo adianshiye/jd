@@ -171,26 +171,24 @@ async function showMsg() {
             $.levelName = $.levelName.substring(0, 2);
 
         if ($.levelName == "注册")
-            $.levelName = "普通会员";
+            $.levelName = `😩普通`;
 		
 		if ($.levelName == "钻石")
-			$.levelName =`💎钻石`
+			$.levelName =`💎钻石`;
 		
 		if ($.levelName == "金牌")
-			$.levelName =`🥇金牌`
+			$.levelName =`🥇金牌`;
 		
 		if ($.levelName == "银牌")
-			$.levelName =`🥈银牌`
+			$.levelName =`🥈银牌`;
 		
 		if ($.levelName == "铜牌")
-			$.levelName =`🥉铜牌`
+			$.levelName =`🥉铜牌`;
 		
         if ($.isPlusVip == 1)
             ReturnMessage += `(${$.levelName}Plus)`;
         else
             ReturnMessage += `(${$.levelName})`;
-		
-		 
     }
 
     if ($.errorMsg)
