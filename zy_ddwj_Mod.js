@@ -1,3 +1,10 @@
+
+/*
+cron "20 0 * * *" zy_ddwj_Mod.js, tag:东东玩家_Mod
+ */
+
+//ccwav Mod，版权在Ariszy.我只是Fix功能性Bug.
+
 /*
 tgchannel：https://t.me/Ariszy8028
 github：https://github.com/Ariszy/Private-Script
@@ -14,7 +21,7 @@ cron "20 0 * * *" script-path= https://raw.githubusercontent.com/Ariszy/Private-
 东东玩家 = type=cron,script-path= https://raw.githubusercontent.com/Ariszy/Private-Script/master/JD/zy_ddwj.js, cronexpr="20 0 * * *", timeout=3600, enable=true
  */
  
- //ccwav Mod，版权在Ariszy.我只是Fix功能性Bug.
+
 const $ = new Env('东东玩家')
 	const notify = $.isNode() ? require('./sendNotify') : '';
 cookiesArr = []
