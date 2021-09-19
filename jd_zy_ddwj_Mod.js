@@ -20,7 +20,6 @@ cron "20 0 * * *" script-path= https://raw.githubusercontent.com/Ariszy/Private-
 ============小火箭=========
 东东玩家 = type=cron,script-path= https://raw.githubusercontent.com/Ariszy/Private-Script/master/JD/zy_ddwj.js, cronexpr="20 0 * * *", timeout=3600, enable=true
  */
- 
 
 const $ = new Env('东东玩家')
 	const notify = $.isNode() ? require('./sendNotify') : '';
@@ -139,7 +138,7 @@ async function doTask() {
 						if (logs) {
 							$.log(data)
 						}
-						
+
 						if (result.data.bizCode == 103) {
 							bolTaskFail = false;
 							console.log("任务已完成，跳过...");
@@ -176,7 +175,7 @@ async function DoTask() {
 						if (logs) {
 							$.log(data)
 						}
-						
+
 						if (result.data.bizCode == 103) {
 							bolTaskFail = false;
 							console.log("任务已完成，跳过...");
@@ -186,7 +185,9 @@ async function DoTask() {
 								console.log(result.data.bizMsg + "\n")
 
 							} else {
-								console.log("任务失败: " + result.data.bizMsg + "\n")
+								if (result.data.bizMsg != "这个任务做完啦！") {
+									console.log("任务失败: " + result.data.bizMsg + "\n")
+								}
 							}
 						}
 				} catch (e) {
@@ -216,8 +217,14 @@ async function unlock() {
 						await $.wait(4000)
 					} else {
 						lcError = "解锁失败";
-						$.log("解锁失败:" + result.data.bizMsg + "\n")
-						strUnlockMessage = "解锁失败: " + result.data.bizMsg + "\n";
+						if (result.data.bizCode == -1111) {
+							strUnlockMessage = "解锁失败: 请手动进行解锁操作!" + "\n";
+							$.log("解锁失败: 请手动进行解锁操作!" + "\n")
+						} else {
+							$.log("解锁失败:" + result.data.bizMsg + "\n");
+							strUnlockMessage = "解锁失败: " + result.data.bizMsg + "\n";
+						}
+
 					}
 				} catch (e) {
 					$.logErr(e, response);
@@ -260,8 +267,8 @@ async function Ariszy() {
 			bolTaskFail = true;
 		await doTask()
 		//if (bolTaskFail) {
-			//$.log("任务失败,再试一次....")
-			await DoTask()
+		//$.log("任务失败,再试一次....")
+		await DoTask()
 		//}
 	}
 
@@ -276,7 +283,7 @@ async function scans() {
 			bolTaskFail = true;
 		await doTask()
 		//if (bolTaskFail) {
-			await DoTask()
+		await DoTask()
 		//}
 	}
 }
@@ -337,7 +344,7 @@ async function getlist() {
 							$.log(data)
 						}
 						if (result.code == 0) {
-							console.log("查看任务列表\n")
+							console.log("解析任务列表....\n")
 
 							let list2 = result.data.result.taskVos.find(item => item.taskId == 2)
 								let maxTimes2 = list2.maxTimes
@@ -526,16 +533,16 @@ async function userScore() {
 						}
 						if (result.code == 0) {
 							let userScore = result.data.result.homeMainInfo.raiseInfo.remainScore
-								let turn = Math.floor(userScore / result.data.result.homeMainInfo.raiseInfo.curLevelStartScore)
-								if (turn > 0) {
-									$.log("共有好玩币：" + userScore + ";开始解锁🔓\n")
-									for (let i = 0; i < turn; i++) {
-										await unlock()
-										if (lcError)
-											break;
-									}
-								} else
-									$.log("好玩币不够,不执行解锁!\n")
+								//let turn = Math.floor(userScore / result.data.result.homeMainInfo.raiseInfo.curLevelStartScore)
+								//if (turn > 0) {
+								$.log("共有好玩币：" + userScore + ";开始解锁🔓\n")
+								for (let i = 0; i < 99; i++) {
+									await unlock()
+									if (lcError)
+										break;
+									//}
+								}
+								//$.log("好玩币不够,不执行解锁!\n")
 						} else {
 							$.log(result.data.bizMsg + "\n")
 						}
