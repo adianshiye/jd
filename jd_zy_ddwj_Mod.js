@@ -216,6 +216,7 @@ async function unlock() {
 					if (result.data.bizCode == 0) {
 						console.log("\n获得" + result.data.result.levelUpAward.pieceRedpacket.value + result.data.result.levelUpAward.pieceRedpacket.name + "\n")
 						strUnlockMessage = "解锁成功: " + "获得" + result.data.result.levelUpAward.pieceRedpacket.value + result.data.result.levelUpAward.pieceRedpacket.name + "\n";
+						
 						await $.wait(4000)
 					} else {
 						lcError = "解锁失败";
