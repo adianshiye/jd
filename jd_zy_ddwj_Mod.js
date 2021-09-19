@@ -139,6 +139,7 @@ async function doTask() {
 						if (logs) {
 							$.log(data)
 						}
+						
 						if (result.data.bizCode == 103) {
 							bolTaskFail = false;
 							console.log("任务已完成，跳过...");
@@ -175,6 +176,7 @@ async function DoTask() {
 						if (logs) {
 							$.log(data)
 						}
+						
 						if (result.data.bizCode == 103) {
 							bolTaskFail = false;
 							console.log("任务已完成，跳过...");
@@ -257,10 +259,10 @@ async function Ariszy() {
 			$.log("任务：" + taskName[j])
 			bolTaskFail = true;
 		await doTask()
-		if (bolTaskFail) {
-			$.log("任务失败,再试一次....")
+		//if (bolTaskFail) {
+			//$.log("任务失败,再试一次....")
 			await DoTask()
-		}
+		//}
 	}
 
 }
@@ -273,9 +275,9 @@ async function scans() {
 			$.log("任务：" + taskName[j])
 			bolTaskFail = true;
 		await doTask()
-		if (bolTaskFail) {
+		//if (bolTaskFail) {
 			await DoTask()
-		}
+		//}
 	}
 }
 async function zy() {
