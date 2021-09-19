@@ -179,15 +179,17 @@ async function DoTask() {
 						if (result.data.bizCode == 103) {
 							bolTaskFail = false;
 							//console.log("任务已完成，跳过...");
+							await $.wait(1000)
 						} else {
 							if (result.data.success) {
 								bolTaskFail = false;
 								console.log(result.data.bizMsg + "\n")
-
+								await $.wait(4000)
 							} else {
 								if (result.data.bizMsg != "这个任务做完啦！" && result.data.bizMsg !="哎呀，加入品牌会员才能获得奖励哦") {
 									console.log("任务失败: " + result.data.bizMsg + "\n")
 								}
+								await $.wait(1000)
 							}
 						}
 				} catch (e) {
