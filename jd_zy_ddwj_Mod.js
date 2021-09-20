@@ -98,17 +98,7 @@ var hour = ''
 		//strMessage += `【京东账号${$.index}${$.nickName || $.UserName}】` + strUnlockMessage;
 		//}
 	}
-	for (let i = 0; i < cookiesArr.length; i++) {
-		cookie = cookiesArr[i];
-		$.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
-			message = ''
-			$.isLogin = true;
-		$.index = i + 1;
-		console.log(`\n******开始【京东账号${$.index}】${$.nickName || $.UserName}助力模块*********\n`);
-		await getsecretp()
-		await control()
-		//await userScore()
-	}
+	
 
 	//console.log(strMessage);
 	//if ($.isNode()) {
