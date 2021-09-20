@@ -98,9 +98,9 @@ var hour = ''
 		}
 	}
 	//console.log(strMessage);
-	if ($.isNode()) {
-		await notify.sendNotify(`${$.name}`, strMessage);
-	}
+	//if ($.isNode()) {
+		//await notify.sendNotify(`${$.name}`, strMessage);
+	//}
 })()
 .catch((e) => $.logErr(e))
 .finally(() => $.done())
