@@ -107,7 +107,7 @@ var hour = ''
 		console.log(`\n******开始【京东账号${$.index}】${$.nickName || $.UserName}助力模块*********\n`);
 		await getsecretp()
 		await control()
-		await userScore()
+		//await userScore()
 	}
 
 	//console.log(strMessage);
