@@ -90,16 +90,29 @@ var hour = ''
 		await gethelpcode()
 		await getlist()
 		await getsecretp()
+		await getfeedtoken()
 		await Ariszy()
 		await zy()
 		//await userScore()
 		//if (strUnlockMessage) {
-			//strMessage += `【京东账号${$.index}${$.nickName || $.UserName}】` + strUnlockMessage;
+		//strMessage += `【京东账号${$.index}${$.nickName || $.UserName}】` + strUnlockMessage;
 		//}
 	}
+	for (let i = 0; i < cookiesArr.length; i++) {
+		cookie = cookiesArr[i];
+		$.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
+			message = ''
+			$.isLogin = true;
+		$.index = i + 1;
+		console.log(`\n******开始【京东账号${$.index}】${$.nickName || $.UserName}助力模块*********\n`);
+		await getsecretp()
+		await control()
+		await userScore()
+	}
+
 	//console.log(strMessage);
 	//if ($.isNode()) {
-		//await notify.sendNotify(`${$.name}`, strMessage);
+	//await notify.sendNotify(`${$.name}`, strMessage);
 	//}
 })()
 .catch((e) => $.logErr(e))
@@ -259,12 +272,11 @@ async function getsecretp() {
 			$.post(MyRequest, async(error, response, data) => {
 				try {
 					const result = JSON.parse(data)
-						if (logs) {
+						if (logs)
 							$.log(data)
-						}
-						secretp = result.data.result.homeMainInfo.secretp
-						userUnlockedPlaceNum = result.data.result.homeMainInfo.raiseInfo.userEarthInfo.userUnlockedPlaceNum
-						//$.log(userUnlockedPlaceNum)
+							secretp = result.data.result.homeMainInfo.secretp
+								userUnlockedPlaceNum = result.data.result.homeMainInfo.raiseInfo.userEarthInfo.userUnlockedPlaceNum
+								//$.log(userUnlockedPlaceNum)
 				} catch (e) {
 					$.logErr(e, response);
 				}
@@ -324,8 +336,8 @@ async function control() {
 	}
 }
 async function dosupport() {
-	const body = `sceneval=&callback=funny_collectScore&functionId=funny_collectScore&appid=o2_act&client=wh5&clientVersion=1.0.0&uuid=-1&body=%7B%22ss%22%3A%22%7B%5C%22extraData%5C%22%3A%7B%5C%22log%5C%22%3A%5C%22%5C%22%2C%5C%22sceneid%5C%22%3A%5C%22HWJhPagewx%5C%22%7D%2C%5C%22secretp%5C%22%3A%5C%22${secretp}%5C%22%2C%5C%22random%5C%22%3A%5C%2295854278%5C%22%7D%22%2C%22inviteId%22%3A%22${token}%22%2C%22isCommonDealError%22%3Atrue%7D&loginType=1&loginWQBiz=businesst1`
-		const MyRequest = PostRequest(``, body)
+	const body = `functionId=funny_collectScore&body=%7B%22ss%22%3A%22%7B%5C%22extraData%5C%22%3A%7B%5C%22log%5C%22%3A%5C%22%5C%22%2C%5C%22sceneid%5C%22%3A%5C%22HWJhPageh5%5C%22%7D%2C%5C%22secretp%5C%22%3A%5C%22${secretp}%5C%22%2C%5C%22random%5C%22%3A%5C%2269009870%5C%22%7D%22%2C%22inviteId%22%3A%22${helpcode}%22%2C%22isCommonDealError%22%3Atrue%7D&client=wh5&clientVersion=1.0.0&uuid=0bcbcdb2a68f16cf9c9ad7c9b944fd141646a849&appid=o2_act`
+		const MyRequest = PostRequest(`advId=funny_collectScore`, body)
 		return new Promise((resolve) => {
 			$.post(MyRequest, async(error, response, data) => {
 				try {
@@ -333,7 +345,6 @@ async function dosupport() {
 						if (logs) {
 							$.log(data)
 						}
-
 						if (result.data.bizCode == 0) {
 							console.log(result.data.bizMsg + "获得" + result.data.result.score + "好玩豆\n")
 							await $.wait(4000)
@@ -506,6 +517,46 @@ async function scan() {
 			})
 		})
 }
+async function getfeedtoken() {
+	for (let i = 9; i < 13; i++) {
+		await getfeedlist(i)
+	}
+}
+async function getfeedlist(Taskid) {
+	const Body = `functionId=funny_getFeedDetail&body=%7B%22taskId%22%3A%22${Taskid}%22%7D&client=wh5&clientVersion=1.0.0&appid=o2_act`
+		const MyRequest = PostRequest(`?advId=funny_getFeedDetail`, Body)
+		return new Promise((resolve) => {
+			$.post(MyRequest, async(error, response, data) => {
+				try {
+					const result = JSON.parse(data)
+						if (logs) {
+							$.log(data)
+						}
+						if (result.data.bizCode == 0) {
+							let lists = result.data.result.addProductVos.find(item => item.taskId == Taskid);
+							let maxTimes = lists.maxTimes;
+							if (lists.status != 2) {
+								for (let i = 0; i < maxTimes; i++) {
+									listtokenArr.push(Taskid + lists.productInfoVos[i].taskToken);
+									list2tokenArr.push(lists.productInfoVos[i].taskToken);
+									taskName.push("加购"+lists.productInfoVos[i].skuName)
+
+									//$.log(JSON.stringify((list2tokenArr)))
+								}
+							}
+							//await zy()
+						} else {
+							$.log(result.data.bizMsg + "\n")
+						}
+				} catch (e) {
+					$.logErr(e, response);
+				}
+				finally {
+					resolve();
+				}
+			})
+		})
+}
 async function gethelpcode() {
 	const MyRequest = PostRequest(`?advId=funny_getTaskDetail`, `functionId=funny_getTaskDetail&body=%7B%22taskId%22%3A%22%22%2C%22appSign%22%3A%221%22%7D&client=wh5&clientVersion=1.0.0&uuid=0bcbcdb2a68f16cf9c9ad7c9b944fd141646a849&appid=o2_act`)
 		return new Promise((resolve) => {
@@ -547,19 +598,21 @@ async function userScore() {
 							$.log(data)
 						}
 						if (result.code == 0) {
-							let userScore = result.data.result.homeMainInfo.raiseInfo.remainScore
-								//let turn = Math.floor(userScore / result.data.result.homeMainInfo.raiseInfo.curLevelStartScore)
-								//if (turn > 0) {
-								$.log("共有好玩币：" + userScore + ";开始解锁🔓\n")
-								for (let i = 0; i < 99; i++) {
+							let userScore = result.data.result.homeMainInfo.raiseInfo.remainScore;
+							let turn = Math.floor(userScore / (result.data.result.homeMainInfo.raiseInfo.nextLevelScore - result.data.result.homeMainInfo.raiseInfo.curLevelStartScore));
+							if (turn > 0) {
+								$.log("共有好玩币：" + userScore + ";开始解锁�" + turn + "次\n")
+
+								for (let i = 0; i < turn; i++) {
 									await unlock()
 									if (lcError)
 										break;
 									//}
 								}
 								//$.log("好玩币不够,不执行解锁!\n")
-						} else {
-							$.log(result.data.bizMsg + "\n")
+							} else {
+								$.log(result.data.bizMsg + "\n")
+							}
 						}
 				} catch (e) {
 					$.logErr(e, response);
