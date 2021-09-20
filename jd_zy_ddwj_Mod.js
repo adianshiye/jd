@@ -92,10 +92,10 @@ var hour = ''
 		await getsecretp()
 		await Ariszy()
 		await zy()
-		await userScore()
-		if (strUnlockMessage) {
-			strMessage += `【京东账号${$.index}${$.nickName || $.UserName}】` + strUnlockMessage;
-		}
+		//await userScore()
+		//if (strUnlockMessage) {
+			//strMessage += `【京东账号${$.index}${$.nickName || $.UserName}】` + strUnlockMessage;
+		//}
 	}
 	//console.log(strMessage);
 	//if ($.isNode()) {
