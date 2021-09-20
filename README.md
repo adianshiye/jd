@@ -138,6 +138,14 @@
 	如果使用请务必禁用其他库的jd_speed_sign脚本.感谢jd_speed_sign原作者。
 	
 	例子 : 有24个ck，则Part1 执行1~8,Part2 执行9~16，Part3 执行17以后剩下的所有ck.
+
+5.jd_zy_ddwj_Mod.js 和 jd_zy_ddwj_help.js
+
+	主要功能来源于Ariszy大佬，我这种小白,只是改下一些执行逻辑。
+	
+	jd_zy_ddwj_Mod是东东玩家任务,jd_zy_ddwj_help是东东玩家的内部互助.
+	
+	源项目地址:https://github.com/Ariszy/Private-Script/tree/master/JD/zy_ddwj.js
 	
 青龙拉库命令:
 
