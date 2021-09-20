@@ -159,9 +159,9 @@ async function doTask() {
 							} else {
 								if (result.data.success) {
 									bolTaskFail = false;
-									console.log(result.data.bizMsg + "\n")									
+									console.log(result.data.bizMsg + "\n")
 								} else {
-									console.log("任务失败: " + result.data.bizMsg + "\n")									
+									console.log("任务失败: " + result.data.bizMsg + "\n")
 								}
 								await $.wait(1000)
 							}
@@ -332,7 +332,10 @@ async function Zy() {
 async function control() {
 	for (let i = 0; i < list1tokenArr.distinct().length; i++) {
 		helpcode = list1tokenArr[i]
+			lcError=""
 			await dosupport()
+			if(lcError)
+				break;
 			await $.wait(4000)
 	}
 }
@@ -346,11 +349,19 @@ async function dosupport() {
 						if (logs) {
 							$.log(data)
 						}
-						if (result.data.bizCode == 0) {
-							console.log(result.data.bizMsg + "获得" + result.data.result.score + "好玩豆\n")
-							await $.wait(4000)
-						} else {
-							console.log(result.data.bizMsg + "\n")
+						if (result.code == 0) {
+							if (result.data.bizCode == 0) {
+								console.log(result.data.bizMsg + "获得" + result.data.result.score + "好玩豆\n")
+								await $.wait(4000)
+							} else {
+								if (result.data.bizCode == 108) {
+									console.log(result.data.bizMsg + "\n")
+									lcError=result.data.bizMsg;
+								}
+								else {
+								console.log(result.data.bizMsg + "\n")
+								}
+							}
 						}
 				} catch (e) {
 					$.logErr(e, response);
@@ -482,6 +493,7 @@ async function getlist() {
 						}
 				} catch (e) {
 					$.logErr(e, response);
+					$.log("Debug:" + data);
 				}
 				finally {
 					resolve();
