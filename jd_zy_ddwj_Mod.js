@@ -35,7 +35,6 @@ const invite = 1; //新用户自动邀请，0关闭，1默认开启
 const logs = 0; //0为关闭日志，1为开启
 let lcError = "";
 let taskName = [];
-let bolTaskFail = true;
 let strMessage = "";
 let strUnlockMessage = "";
 var hour = ''
@@ -143,17 +142,17 @@ async function doTask() {
 						}
 						if (result.code == 0) {
 							if (result.data.bizCode == 103) {
-								bolTaskFail = false;
 								console.log("任务已完成，跳过...");
 								await $.wait(1000)
 							} else {
-								if (result.data.success) {
-									bolTaskFail = false;
+								if (result.data.success) {									
 									console.log(result.data.bizMsg + "\n")
+									await $.wait(8000)
 								} else {
 									console.log("任务失败: " + result.data.bizMsg + "\n")
+									await $.wait(1000)
 								}
-								await $.wait(1000)
+								
 							}
 						} else {
 							$.log(result.msg + "\n")
@@ -180,12 +179,10 @@ async function DoTask() {
 						}
 						if (result.code == 0) {
 							if (result.data.bizCode == 103) {
-								bolTaskFail = false;
 								console.log("任务已完成，跳过...");
 								await $.wait(1000)
 							} else {
 								if (result.data.success) {
-									bolTaskFail = false;
 									console.log(result.data.bizMsg + "\n")
 									await $.wait(4000)
 								} else {
@@ -282,7 +279,6 @@ async function Ariszy() {
 		token = list2tokenArr[j]
 			taskid = listtokenArr[j].match(/\d+/)
 			$.log("任务：" + taskName[j])
-			bolTaskFail = true;
 		await doTask()
 		if (taskid == 2 || taskid == 4 || taskid == 8 || taskid == 14) {
 			await DoTask()
@@ -298,7 +294,6 @@ async function scans() {
 			//$.log("TaskId：" + taskid)
 			//$.log("Token：" + token)
 			$.log("任务：" + taskName[j])
-			bolTaskFail = true;
 		await doTask()
 		//if (bolTaskFail) {
 		await DoTask()
