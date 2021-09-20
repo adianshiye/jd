@@ -151,24 +151,24 @@ async function doTask() {
 						if (logs) {
 							$.log(data)
 						}
-
-						if (result.data.bizCode == 103) {
-							bolTaskFail = false;
-							console.log("任务已完成，跳过...");
-						} else {
-							if (result.code == 0) {
+						if (result.code == 0) {
+							if (result.data.bizCode == 103) {
+								bolTaskFail = false;
+								console.log("任务已完成，跳过...");
+								await $.wait(1000)
+							} else {
 								if (result.data.success) {
 									bolTaskFail = false;
-									console.log(result.data.bizMsg + "\n")
-									await $.wait(8000)
+									console.log(result.data.bizMsg + "\n")									
 								} else {
-									console.log("任务失败: " + result.data.bizMsg + "\n")
+									console.log("任务失败: " + result.data.bizMsg + "\n")									
 								}
-
-							} else {
-								$.log(result.msg + "\n")
+								await $.wait(1000)
 							}
+						} else {
+							$.log(result.msg + "\n")
 						}
+
 				} catch (e) {
 					$.logErr(e, response);
 				}
@@ -188,21 +188,22 @@ async function DoTask() {
 						if (logs) {
 							$.log(data)
 						}
-
-						if (result.data.bizCode == 103) {
-							bolTaskFail = false;
-							//console.log("任务已完成，跳过...");
-							await $.wait(1000)
-						} else {
-							if (result.data.success) {
+						if (result.code == 0) {
+							if (result.data.bizCode == 103) {
 								bolTaskFail = false;
-								console.log(result.data.bizMsg + "\n")
-								await $.wait(4000)
-							} else {
-								if (result.data.bizMsg != "这个任务做完啦！" && result.data.bizMsg != "哎呀，加入品牌会员才能获得奖励哦") {
-									console.log("任务失败: " + result.data.bizMsg + "\n")
-								}
+								console.log("任务已完成，跳过...");
 								await $.wait(1000)
+							} else {
+								if (result.data.success) {
+									bolTaskFail = false;
+									console.log(result.data.bizMsg + "\n")
+									await $.wait(4000)
+								} else {
+									if (result.data.bizMsg != "这个任务做完啦！" && result.data.bizMsg != "哎呀，加入品牌会员才能获得奖励哦") {
+										console.log("任务失败: " + result.data.bizMsg + "\n")
+									}
+									await $.wait(1000)
+								}
 							}
 						}
 				} catch (e) {
@@ -539,7 +540,7 @@ async function getfeedlist(Taskid) {
 								for (let i = 0; i < maxTimes; i++) {
 									listtokenArr.push(Taskid + lists.productInfoVos[i].taskToken);
 									list2tokenArr.push(lists.productInfoVos[i].taskToken);
-									taskName.push("加购"+lists.productInfoVos[i].skuName)
+									taskName.push("加购" + lists.productInfoVos[i].skuName)
 
 									//$.log(JSON.stringify((list2tokenArr)))
 								}
@@ -605,14 +606,15 @@ async function userScore() {
 
 								for (let i = 0; i < turn; i++) {
 									await unlock()
-									if (lcError)
+									if (lcError) {
 										break;
-									//}
+									}
 								}
-								//$.log("好玩币不够,不执行解锁!\n")
 							} else {
-								$.log(result.data.bizMsg + "\n")
+								$.log("好玩币不够,不执行解锁!\n");
 							}
+						} else {
+							$.log(result.data.bizMsg + "\n")
 						}
 				} catch (e) {
 					$.logErr(e, response);
