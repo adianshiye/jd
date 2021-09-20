@@ -186,7 +186,7 @@ async function DoTask() {
 								console.log(result.data.bizMsg + "\n")
 								await $.wait(4000)
 							} else {
-								if (result.data.bizMsg != "这个任务做完啦！" && result.data.bizMsg !="哎呀，加入品牌会员才能获得奖励哦") {
+								if (result.data.bizMsg != "这个任务做完啦！" && result.data.bizMsg != "哎呀，加入品牌会员才能获得奖励哦") {
 									console.log("任务失败: " + result.data.bizMsg + "\n")
 								}
 								await $.wait(1000)
@@ -213,24 +213,38 @@ async function unlock() {
 							$.log(data)
 						}
 						lcError = "";
-					if (result.data.bizCode == 0) {
-						console.log("\n获得" + result.data.result.levelUpAward.pieceRedpacket.value + result.data.result.levelUpAward.pieceRedpacket.name + "\n")
-						strUnlockMessage = "解锁成功: " + "获得" + result.data.result.levelUpAward.pieceRedpacket.value + result.data.result.levelUpAward.pieceRedpacket.name + "\n";
-						
-						await $.wait(4000)
-					} else {
-						lcError = "解锁失败";
-						if (result.data.bizCode == -1111) {
-							strUnlockMessage = "解锁失败: 请手动进行解锁操作!" + "\n";
-							$.log("解锁失败: 请手动进行解锁操作!" + "\n")
-						} else {
-							$.log("解锁失败:" + result.data.bizMsg + "\n");
-							strUnlockMessage = "解锁失败: " + result.data.bizMsg + "\n";
-						}
 
+					if (!result) {
+						strUnlockMessage = "解锁失败: 请手动进行解锁操作!" + "\n";
+						$.log("解锁失败: 服务器返回空!" + "\n")
+
+					} else {
+						if (!result.data.bizCode) {
+							$.log("Debug: " + data + "\n");
+						} else {
+
+							if (result.data.bizCode == 0) {
+								console.log("\n获得" + result.data.result.levelUpAward.pieceRedpacket.value + result.data.result.levelUpAward.pieceRedpacket.name + "\n")
+								strUnlockMessage = "解锁成功: " + "获得" + result.data.result.levelUpAward.pieceRedpacket.value + result.data.result.levelUpAward.pieceRedpacket.name + "\n";
+								lcError = "解锁成功,跳出循环.";
+								await $.wait(4000)
+							} else {
+								lcError = "解锁失败";
+								if (result.data.bizCode == -1111) {
+									strUnlockMessage = "解锁失败: 请手动进行解锁操作!" + "\n";
+									$.log("解锁失败: 请手动进行解锁操作!" + "\n")
+								} else {
+									$.log("解锁失败:" + result.data.bizMsg + "\n");
+									strUnlockMessage = "解锁失败: " + result.data.bizMsg + "\n";
+								}
+
+							}
+						}
 					}
 				} catch (e) {
 					$.logErr(e, response);
+					strUnlockMessage = "解锁失败: 请手动进行解锁操作!" + "\n";
+					$.log("解锁失败: 请手动进行解锁操作!" + "\n")
 				}
 				finally {
 					resolve();
