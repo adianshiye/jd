@@ -143,16 +143,14 @@ async function doTask() {
 						if (result.code == 0) {
 							if (result.data.bizCode == 103) {
 								console.log("任务已完成，跳过...");
-								await $.wait(1000)
+								await $.wait(1000);
 							} else {
 								if (result.data.success) {									
-									console.log(result.data.bizMsg + "\n")
-									await $.wait(8000)
+									console.log(result.data.bizMsg + "\n")									
 								} else {
-									console.log("任务失败: " + result.data.bizMsg + "\n")
-									await $.wait(1000)
+									console.log("任务失败: " + result.data.bizMsg + "\n")									
 								}
-								
+								await $.wait(1000);
 							}
 						} else {
 							$.log(result.msg + "\n")
@@ -281,6 +279,7 @@ async function Ariszy() {
 			$.log("任务：" + taskName[j])
 		await doTask()
 		if (taskid == 2 || taskid == 4 || taskid == 8 || taskid == 14) {
+			await $.wait(7000);
 			await DoTask()
 		}
 
