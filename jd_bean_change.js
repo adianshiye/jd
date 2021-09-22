@@ -168,8 +168,8 @@ async function showMsg() {
 	//if ($.errorMsg)
 	//return
 
-	ReturnMessage = `👇=======账号${$.index}=======👇\n`
-	ReturnMessage += `【账号名称】${$.nickName || $.UserName}\n`;
+	//ReturnMessage = `👇=======账号${$.index}=======👇\n`
+	ReturnMessage = `【账号${$.index}🆔】${$.nickName || $.UserName}\n`;
 	
 	if ($.levelName || $.JingXiang)
 		ReturnMessage += `【账号信息】`;
@@ -301,8 +301,8 @@ async function showMsg() {
 		}
 	}
 	ReturnMessage += `🧧🧧🧧红包明细🧧🧧🧧\n`;
-	ReturnMessage += `${$.message}\n\n`;
-	allMessage += ReturnMessage;
+	ReturnMessage += `${$.message}`;
+	allMessage += ReturnMessage+`\n\n`;
 	console.log(`${ReturnMessage}`);
 	//$.msg($.name, '', ReturnMessage , {"open-url": "https://bean.m.jd.com/beanDetail/index.action?resourceValue=bean"});
 }
