@@ -143,6 +143,23 @@
 			
 			屏蔽青龙登陆成功通知，登陆失败不屏蔽.
 
+(8) NOTIFY_CUSTOMNOTIFY (待验证)
+	
+	自定义脚本通知，可以指定通知脚本组别跟通知类型.
+	
+	格式为 脚本名称&推送组别&推送类型
+	
+	支持多个配置,通知类型关键字如下,可自行删减:
+	
+	Server酱&pushplus&Bark&TG机器人&钉钉&企业微信机器人&企业微信应用消息&iGotNotify&gobotNotify	
+	
+	例子 :  export NOTIFY_CUSTOMNOTIFY=["京东资产变动&组1&Server酱&Bark&企业微信应用消息","京东白嫖榜&组2&钉钉&pushplus"] 
+	
+	效果是: 京东资产变动推送到组1且只使用Server酱,Bark,企业微信应用消息三种方式进行通知.
+	
+			京东白嫖榜推送到组2且只使用钉钉,pushplus两种方式进行通知.
+	
+
 4.jd_speed_sign_Part1~jd_speed_sign_Part3
 
 	简单粗暴的极速版的分任务版，将总ck数除以3后平均分配成三个任务同时执行.
