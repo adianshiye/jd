@@ -54,7 +54,7 @@
 
 (2)京东白嫖榜会独立通知
    
-   即需要通过设置sendNotify的NOTIFY_GROUP_LIST加入“京东白嫖榜”单独控制通知组别.
+	即需要通过设置sendNotify的NOTIFY_GROUP_LIST加入“京东白嫖榜”单独控制通知组别.
 
 
 3.sendNotify.js 
