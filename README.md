@@ -10,6 +10,11 @@
 	
 	不然每次重启容器sendNotify.js都会被覆盖.
 
+频道:
+	
+	https://t.me/ccwav_QLScript
+	
+	
 脚本介绍:
 
 1.jd_CheckCK.js
