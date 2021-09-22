@@ -258,9 +258,9 @@ async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By cc
 			strCustomTempArr = [];
 			for (var Tempj in strCustomArr) {
 				strCustomTempArr = strCustomArr[Tempj].split("&");
-				if (strCustomTempArr.length > 1) {
-					console.log("检测到自定义设定,开始执行配置...");
+				if (strCustomTempArr.length > 1) {					
 					if (text == strCustomTempArr[0]) {
+						console.log("检测到自定义设定,开始执行配置...");
 						if (strCustomTempArr[1] == "组2") {
 							console.log("自定义设定强制使用组2配置通知...");
 							UseGroup2 = true;
