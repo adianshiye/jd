@@ -302,7 +302,7 @@ async function showMsg() {
 	}
 	ReturnMessage += `🧧🧧🧧红包明细🧧🧧🧧\n`;
 	ReturnMessage += `${$.message}`;
-	allMessage += ReturnMessage+`\n\n`;
+	allMessage += ReturnMessage+`\n`;
 	console.log(`${ReturnMessage}`);
 	//$.msg($.name, '', ReturnMessage , {"open-url": "https://bean.m.jd.com/beanDetail/index.action?resourceValue=bean"});
 }
