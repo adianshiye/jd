@@ -152,7 +152,7 @@ if ($.isNode()) {
 	}
 
 	if ($.isNode() && allMessage2) {
-		await notify.sendNotify(`${$.name}`, `${allMessage2}`, {
+		await notify.sendNotify("京东白嫖榜", `${allMessage2}`, {
 			url: `https://bean.m.jd.com/beanDetail/index.action?resourceValue=bean`
 		})
 	}

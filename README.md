@@ -51,7 +51,12 @@
     例子 :  export BEANCHANGE_PERSENT="10"  总共有22个账号
 	
 	结果会分成3条推送通知，1~10为第一条推送，11~20为第二条推送，剩余的为第三条推送
-	
+
+(2)京东白嫖榜会独立通知
+   
+   即需要通过设置sendNotify的NOTIFY_GROUP_LIST加入“京东白嫖榜”单独控制通知组别.
+
+
 3.sendNotify.js 
 
 变量列表:
