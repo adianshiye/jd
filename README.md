@@ -159,6 +159,17 @@
 	
 			京东白嫖榜推送到组2且只使用钉钉,pushplus两种方式进行通知.
 	
+(9) NOTIFY_CKTASK
+
+	当接收到发送CK失效通知和Ninja 运行通知时候执行子线程任务.
+	
+	(jd_CheckCK.js 可替换成其他任意qinglong支持的脚本文件.)
+	
+	例子: export NOTIFY_CKTASK="jd_CheckCK.js"
+	
+	效果: 当CK失效发送通知时自动执行jd_CheckCK.js
+	
+		  当Ninja更新CK发送通知时自动执行jd_CheckCK.js
 
 4.jd_speed_sign_Part1~jd_speed_sign_Part3
 
