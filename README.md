@@ -191,8 +191,8 @@
 
 	不包含sendNotify:
 
-	ql repo https://github.com/ccwav/QLScript.git "jd_" "sendNotify.js" "ql.js"
+	ql repo https://github.com/ccwav/QLScript.git "jd_" "sendNotify.js|NoUsed" "ql.js"
 
 	包含sendNotify:
 
-	ql repo https://github.com/ccwav/QLScript.git "jd_" "" "ql.js|sendNotify.js"
+	ql repo https://github.com/ccwav/QLScript.git "jd_" "NoUsed" "ql.js|sendNotify.js"
