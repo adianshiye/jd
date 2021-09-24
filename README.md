@@ -67,6 +67,51 @@
 	
 	没有指定则默认通过组1的参数设定进行通知.
 
+(3)BEANCHANGE_USERGP1和BEANCHANGE_USERGP2
+
+	根据Pt_Pin的值进行分组通知，此功能搭配sendNotify的NOTIFY_CUSTOMNOTIFY功能可实现分账号通知不同群组功能.
+	
+	注意：分组通知会强制禁用BEANCHANGE_PERSENT变量!
+	
+	
+	例子1 :  总共Test1~10 10个账号,变量设置如下:
+	
+	export BEANCHANGE_USERGP1="test1&test3&test4"
+	
+	export BEANCHANGE_USERGP2="test1&test5&test6"
+
+	效果:通知会拆成3次进行发送:
+	
+		1) 通知标题为京东资产变动#1,内容为 test1 test3 test4 3个账号的资产
+		
+		   通知标题为京东白嫖榜#1,内容为 test1 test3 test4 3个账号的白嫖榜
+		
+		2) 通知标题为京东资产变动#2,内容为 test1 test5 test6 3个账号的资产
+		
+		   通知标题为京东白嫖榜#2,内容为 test1 test5 test6 3个账号的白嫖榜
+		
+		3) 通知标题为京东资产变动,内容为除了 test1 test3 test4 test5 test6 之外其他账号的资产
+		
+		   通知标题为京东白嫖榜,内容为除了 test1 test3 test4 test5 test6 之外其他账号的白嫖榜
+
+	例子2 :  高级用法,需搭配发送通知脚本食用!
+	
+	总共Test1~10 10个账号,变量设置如下:
+	
+	export BEANCHANGE_USERGP1="test1&test2&test3&test4&test8"
+	
+	export NOTIFY_CUSTOMNOTIFY=["京东资产变动#1&组2&企业微信应用消息","京东资产变动&组2&pushplus","京东白嫖榜#1&组2&企业微信应用消息","京东白嫖榜&组2&pushplus"] 
+
+	效果:通知会拆成2次进行发送:
+	
+		1) 通知标题为京东资产变动#1,内容为 test1 test2 test3 test4 test8 5个账号的资产,推送到组2的企业微信应用消息.
+		
+		   通知标题为京东白嫖榜#1,内容为 test1 test2 test3 test4 test8 5个账号的白嫖榜,推送到组2的企业微信应用消息.
+			
+		2) 通知标题为京东资产变动,内容为除了 test1 test2 test3 test4 test8 5个账号其他账号的资产,推送到组2的pushplus.
+		
+		   通知标题为京东白嫖榜,内容为除了 test1 test2 test3 test4 test8 5个账号其他账号的白嫖榜,推送到组2的pushplus.
+	
 
 3.sendNotify.js 
 
@@ -147,7 +192,7 @@
 			
 			屏蔽青龙登陆成功通知，登陆失败不屏蔽.
 
-(8) NOTIFY_CUSTOMNOTIFY (待验证)
+(8) NOTIFY_CUSTOMNOTIFY 
 	
 	自定义脚本通知，可以指定通知脚本组别跟通知类型.
 	
