@@ -125,7 +125,7 @@ async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By cc
 	console.log(`开始发送通知...`);
 	try {
 		//Reset 变量
-
+		console.log("通知标题: "+text);
 		UseGroup2 = false;
 		strTitle = "";
 		GOBOT_URL = '';
