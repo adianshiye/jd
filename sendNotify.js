@@ -1228,7 +1228,7 @@ function GetnickName2() {
 						}
 						const userInfo = data.user;
 						if (userInfo) {
-							$.nickName = userInfo.unickName;
+							$.nickName = userInfo.petName;
 						}
 					} else {
 						$.log('京东服务器返回空数据');
