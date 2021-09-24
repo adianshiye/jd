@@ -2,6 +2,10 @@
 
 注意事项: 
 
+	如果发现账户名称不能被正确处理，请手动删除ql\scripts\CKName_cache.json 文件.
+	
+	另外某些账号如果服务器返回空有可能不会被正确处理，请知悉.
+	
     ql.js 是jd_CheckCK.js和sendNotify.js的依赖,
 	
 	只要你使用了这两个脚本就一定保证放在同个文件夹里面.
