@@ -220,6 +220,9 @@ async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By cc
 				strTitle = "东东萌宠";
 			}
 		}
+		if (text.indexOf("汪汪乐园养joy") != -1) {			
+			strTitle = "汪汪乐园养joy";			
+		}
 
 		if (text == "京喜工厂") {
 			if (desp.indexOf("元造进行兑换") != -1) {
