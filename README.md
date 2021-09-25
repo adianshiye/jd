@@ -228,14 +228,20 @@
 	
 	例子 : 有24个ck，则Part1 执行1~8,Part2 执行9~16，Part3 执行17以后剩下的所有ck.
 
-5.jd_zy_ddwj_Mod.js 和 jd_zy_ddwj_help.js
+5.jd_zy_ddwj_Mod.js 和 jd_zy_ddwj_help.js （已失效）
 
 	主要功能来源于Ariszy大佬，我这种小白,只是改下一些执行逻辑。
 	
 	jd_zy_ddwj_Mod是东东玩家任务,jd_zy_ddwj_help是东东玩家的内部互助.
 	
 	源项目地址:https://github.com/Ariszy/Private-Script/tree/master/JD/zy_ddwj.js
+
+6.jd_priceProtect_Mod.js
+
+	京东价格保护通知版
 	
+	仅仅是保价成功加上了通知，改了执行时间,没有什么技术含量...
+
 青龙拉库命令:
 
 	不包含sendNotify:
