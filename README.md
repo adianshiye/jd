@@ -112,7 +112,15 @@
 		
 		   通知标题为京东白嫖榜,内容为除了 test1 test2 test3 test4 test8 5个账号其他账号的白嫖榜,推送到组2的pushplus.
 	
-
+	例子3 :  高级用法,需搭配发送通知脚本食用!
+	
+	使用BEANCHANGE_USERGP1后配置 NOTIFY_GROUP_LIST="京东资产变动#1"
+	
+	使用BEANCHANGE_USERGP2后配置 NOTIFY_GROUP3_LIST="京东资产变动#2"
+	
+	这样USERGP1 推送到组2，USERGP2推送到组3，剩下的推送到原始组别.
+	
+	
 3.sendNotify.js 
 
 变量列表:
@@ -124,15 +132,18 @@
 	
     例子 :  export NOTIFY_SKIP_LIST="京东CK检测&京东资产变动"
 	
-(2) NOTIFY_GROUP_LIST
+(2) NOTIFY_GROUP_LIST 和 NOTIFY_GROUP3_LIST
 
-    如果通知标题在此变量里面存在(&隔开),则用第2套推送变量进行配置.
+    如果通知标题在此变量里面存在(&隔开),则用第2/3套推送变量进行配置.
 	
-	(PS:例子使用了企业微信的变量QYWX_AM,实际是所有推送变量后加2都会有效.)
+	(PS:例子使用了企业微信的变量QYWX_AM,实际是所有推送变量后加2/3都会有效.)
 	
-    例子 :  export NOTIFY_GROUP_LIST="京东CK检测&京东资产变动&Ninja 运行通知"
+    例子 :  export NOTIFY_GROUP_LIST="京东资产变动"
+			export NOTIFY_GROUP3_LIST="Ninja 运行通知&京东CK检测"
 	
-	假如企业微信配置了QYWX_AM和QYWX_AM2,则执行京东资产变动时会推送到QYWX_AM2配置的企业微信.
+	假如企业微信配置了QYWX_AM和QYWX_AM2和QYWX_AM3,则执行京东资产变动时会推送到QYWX_AM2配置的企业微信.
+	
+	Ninja 运行通知和京东CK检测会推送到QYWX_AM3配置的企业微信.
 	
 (3) SHOWREMARKTYPE
 
