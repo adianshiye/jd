@@ -71,8 +71,7 @@ if ($.isNode()) {
 		});
 		return;
 	}
-	for (i = 0; i < cookiesArr.length; i++) {
-		//for (i = 0; i < 2; i++) {
+	for (i = 0; i < cookiesArr.length; i++) {	
 		if (cookiesArr[i]) {
 			cookie = cookiesArr[i];
 			$.pt_pin = (cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
@@ -110,7 +109,7 @@ if ($.isNode()) {
 			$.isPlusVip = 0;
 			$.JingXiang = "";
 
-			console.log(`******开始查询【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
+			console.log(`******开始查询【京东账号${$.index}】${$.nickName || $.UserName}*********`);
 
 			await TotalBean();
 			await TotalBean2();
@@ -449,8 +448,21 @@ async function showMsg() {
 		} else if (response.resultCode === '0') {
 			ReturnMessage += `【东东萌宠】${$.petInfo.goodsInfo.goodsName}`;
 			ReturnMessage += `(${(response.result.medalPercent).toFixed(0)}%,${response.result.medalNum}/${response.result.medalNum+response.result.needCollectMedalNum}块)\n`;
+		} else if (!$.petInfo.goodsInfo) {
+			ReturnMessage += `【东东萌宠】暂未选购新的商品!\n`;
+			if (userIndex1 != -1) {
+				ReceiveMessageGp1 += `【账号${IndexGp1} ${$.nickName || $.UserName}】暂未选购新的商品! (东东萌宠)\n`;
+			}
+			if (userIndex2 != -1) {
+				ReceiveMessageGp2 += `【账号${IndexGp2} ${$.nickName || $.UserName}】暂未选购新的商品! (东东萌宠)\n`;
+			}
+			if (userIndex1 == -1 && userIndex2 == -1) {
+				allWarnMessage += `【账号${IndexAll} ${$.nickName || $.UserName}】暂未选购新的商品! (东东萌宠)\n`;
+			}
+
 		}
 	}
+
 	ReturnMessage += `🧧🧧🧧红包明细🧧🧧🧧\n`;
 	ReturnMessage += `${$.message}`;
 
