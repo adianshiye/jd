@@ -38,22 +38,22 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
 let intPerSent = 0;
 let i = 0;
 let DisableCash = "false";
-if (process.env.BEANCHANGE_PERSENT) {
+if ($.isNode() && process.env.BEANCHANGE_PERSENT) {
 	intPerSent = parseInt(process.env.BEANCHANGE_PERSENT);
 	console.log(`检测到设定了分段通知:` + intPerSent);
 }
 
-if (process.env.BEANCHANGE_USERGP1) {
+if ($.isNode() && process.env.BEANCHANGE_USERGP1) {
 	MessageUserGp1 = process.env.BEANCHANGE_USERGP1 ? process.env.BEANCHANGE_USERGP1.split('&') : [];
 	intPerSent = 0; //分组推送，禁用账户拆分
 	console.log(`检测到设定了分组推送1,将禁用分段通知`);
 }
-if (process.env.BEANCHANGE_USERGP2) {
+if ($.isNode() && process.env.BEANCHANGE_USERGP2) {
 	MessageUserGp2 = process.env.BEANCHANGE_USERGP2 ? process.env.BEANCHANGE_USERGP2.split('&') : [];
 	intPerSent = 0; //分组推送，禁用账户拆分
 	console.log(`检测到设定了分组推送2,将禁用分段通知`);
 }
-if (process.env.BEANCHANGE_DISABLECASH) {
+if ($.isNode() && process.env.BEANCHANGE_DISABLECASH) {
 	DisableCash = process.env.BEANCHANGE_DISABLECASH;
 }
 let userIndex1 = -1;
