@@ -2,7 +2,7 @@
 cron "30 10,22 * * *" jd_bean_change.js, tag:资产变化强化版by-ccwav
  */
 
-//更新by ccwav,20210924
+//更新by ccwav,20210926,不支持QX，如果要修可以送我一部iphone~~
 //详细用法及其特殊变量请移步https://github.com/ccwav/QLScript 查看.
 
 const $ = new Env('京东资产变动');
@@ -39,15 +39,18 @@ let intPerSent = 0;
 let i = 0;
 if (process.env.BEANCHANGE_PERSENT) {
 	intPerSent = parseInt(process.env.BEANCHANGE_PERSENT);
+	console.log(`检测到设定了分段通知:` + intPerSent);
 }
 
 if (process.env.BEANCHANGE_USERGP1) {
 	MessageUserGp1 = process.env.BEANCHANGE_USERGP1 ? process.env.BEANCHANGE_USERGP1.split('&') : [];
 	intPerSent = 0; //分组推送，禁用账户拆分
+	console.log(`检测到设定了分组推送1,将禁用分段通知`);
 }
 if (process.env.BEANCHANGE_USERGP2) {
 	MessageUserGp2 = process.env.BEANCHANGE_USERGP2 ? process.env.BEANCHANGE_USERGP2.split('&') : [];
 	intPerSent = 0; //分组推送，禁用账户拆分
+	console.log(`检测到设定了分组推送2,将禁用分段通知`);
 }
 let userIndex1 = -1;
 let userIndex2 = -1;
@@ -72,7 +75,7 @@ if ($.isNode()) {
 		//for (i = 0; i < 2; i++) {
 		if (cookiesArr[i]) {
 			cookie = cookiesArr[i];
-			$.pt_pin=(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
+			$.pt_pin = (cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
 			$.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
 			$.CryptoJS = $.isNode() ? require('crypto-js') : CryptoJS;
 			$.index = i + 1;
@@ -187,6 +190,7 @@ if ($.isNode()) {
 	}
 
 	if (intPerSent > 0) {
+		console.log("分段通知还剩下" + cookiesArr.length % intPerSent + "个账号需要发送...");
 		if (cookiesArr.length % intPerSent != 0) {
 			console.log("分段通知收尾，处理发送通知....");
 			if ($.isNode() && allMessage) {
@@ -340,13 +344,13 @@ async function showMsg() {
 			if ($.treeState === 2 || $.treeState === 3) {
 				ReturnMessage += `【东东农场】${$.JdFarmProdName} 可以兑换了!\n`;
 				if (userIndex1 != -1) {
-					ReceiveMessageGp1 += `【账号${$.index} ${$.nickName || $.UserName}】${$.JdFarmProdName} (东东农场)\n`;
+					ReceiveMessageGp1 += `【账号${$.IndexGp1} ${$.nickName || $.UserName}】${$.JdFarmProdName} (东东农场)\n`;
 				}
 				if (userIndex2 != -1) {
-					ReceiveMessageGp2 += `【账号${$.index} ${$.nickName || $.UserName}】${$.JdFarmProdName} (东东农场)\n`;
+					ReceiveMessageGp2 += `【账号${$.IndexGp2} ${$.nickName || $.UserName}】${$.JdFarmProdName} (东东农场)\n`;
 				}
 				if (userIndex1 == -1 && userIndex2 == -1) {
-					allReceiveMessage += `【账号${$.index} ${$.nickName || $.UserName}】${$.JdFarmProdName} (东东农场)\n`;
+					allReceiveMessage += `【账号${$.IndexAll} ${$.nickName || $.UserName}】${$.JdFarmProdName} (东东农场)\n`;
 				}
 			} else {
 				if ($.JdwaterD != 'Infinity' && $.JdwaterD != '-Infinity') {
@@ -360,26 +364,26 @@ async function showMsg() {
 			if ($.treeState === 0) {
 
 				if (userIndex1 != -1) {
-					ReceiveMessageGp1 += `【账号${$.index} ${$.nickName || $.UserName}】${$.JdFarmProdName} (东东农场)\n`;
+					ReceiveMessageGp1 += `【账号${$.IndexGp1} ${$.nickName || $.UserName}】${$.JdFarmProdName} (东东农场)\n`;
 				}
 				if (userIndex2 != -1) {
-					ReceiveMessageGp2 += `【账号${$.index} ${$.nickName || $.UserName}】${$.JdFarmProdName} (东东农场)\n`;
+					ReceiveMessageGp2 += `【账号${$.IndexGp2} ${$.nickName || $.UserName}】${$.JdFarmProdName} (东东农场)\n`;
 				}
 				if (userIndex1 == -1 && userIndex2 == -1) {
-					allWarnMessage += `【账号${$.index} ${$.nickName || $.UserName}】水果领取后未重新种植! (东东农场)\n`;
+					allWarnMessage += `【账号${$.IndexAll} ${$.nickName || $.UserName}】水果领取后未重新种植! (东东农场)\n`;
 				}
 			} else if ($.treeState === 1) {
 				ReturnMessage += `【东东农场】${$.JdFarmProdName}种植中...\n`;
 			} else {
 
 				if (userIndex1 != -1) {
-					ReceiveMessageGp1 += `【账号${$.index} ${$.nickName || $.UserName}】状态异常! (东东农场)\n`;
+					ReceiveMessageGp1 += `【账号${$.IndexGp1} ${$.nickName || $.UserName}】状态异常! (东东农场)\n`;
 				}
 				if (userIndex2 != -1) {
-					ReceiveMessageGp2 += `【账号${$.index} ${$.nickName || $.UserName}】状态异常! (东东农场)\n`;
+					ReceiveMessageGp2 += `【账号${$.IndexGp2} ${$.nickName || $.UserName}】状态异常! (东东农场)\n`;
 				}
 				if (userIndex1 == -1 && userIndex2 == -1) {
-					allWarnMessage += `【账号${$.index} ${$.nickName || $.UserName}】状态异常! (东东农场)\n`;
+					allWarnMessage += `【账号${$.IndexAll} ${$.nickName || $.UserName}】状态异常! (东东农场)\n`;
 				}
 				//ReturnMessage += `【东东农场】${$.JdFarmProdName}状态异常${$.treeState}...\n`;
 			}
@@ -393,24 +397,24 @@ async function showMsg() {
 	}
 	if ($.DdFactoryReceive) {
 		if (userIndex1 != -1) {
-			ReceiveMessageGp1 += `【账号${$.index} ${$.nickName || $.UserName}】${$.DdFactoryReceive} (东东工厂)\n`;
+			ReceiveMessageGp1 += `【账号${$.IndexGp1} ${$.nickName || $.UserName}】${$.DdFactoryReceive} (东东工厂)\n`;
 		}
 		if (userIndex2 != -1) {
-			ReceiveMessageGp2 += `【账号${$.index} ${$.nickName || $.UserName}】${$.DdFactoryReceive} (东东工厂)\n`;
+			ReceiveMessageGp2 += `【账号${$.IndexGp2} ${$.nickName || $.UserName}】${$.DdFactoryReceive} (东东工厂)\n`;
 		}
 		if (userIndex1 == -1 && userIndex2 == -1) {
-			allReceiveMessage += `【账号${$.index} ${$.nickName || $.UserName}】${$.DdFactoryReceive} (东东工厂)\n`;
+			allReceiveMessage += `【账号${$.IndexAll} ${$.nickName || $.UserName}】${$.DdFactoryReceive} (东东工厂)\n`;
 		}
 	}
 	if ($.jxFactoryReceive) {
 		if (userIndex1 != -1) {
-			ReceiveMessageGp1 += `【账号${$.index} ${$.nickName || $.UserName}】${$.jxFactoryReceive} (京喜工厂)\n`;
+			ReceiveMessageGp1 += `【账号${$.IndexGp1} ${$.nickName || $.UserName}】${$.jxFactoryReceive} (京喜工厂)\n`;
 		}
 		if (userIndex2 != -1) {
-			ReceiveMessageGp2 += `【账号${$.index} ${$.nickName || $.UserName}】${$.jxFactoryReceive} (京喜工厂)\n`;
+			ReceiveMessageGp2 += `【账号${$.IndexGp2} ${$.nickName || $.UserName}】${$.jxFactoryReceive} (京喜工厂)\n`;
 		}
 		if (userIndex1 == -1 && userIndex2 == -1) {
-			allReceiveMessage += `【账号${$.index} ${$.nickName || $.UserName}】${$.jxFactoryReceive} (京喜工厂)\n`;
+			allReceiveMessage += `【账号${$.IndexAll} ${$.nickName || $.UserName}】${$.jxFactoryReceive} (京喜工厂)\n`;
 		}
 
 	}
@@ -424,23 +428,23 @@ async function showMsg() {
 			ReturnMessage += `【东东萌宠】${$.petInfo.goodsInfo.goodsName}已可领取!\n`;
 
 			if (userIndex1 != -1) {
-				ReceiveMessageGp1 += `【账号${$.index} ${$.nickName || $.UserName}】${$.petInfo.goodsInfo.goodsName}可以兑换了! (东东萌宠)\n`;
+				ReceiveMessageGp1 += `【账号${$.IndexGp1} ${$.nickName || $.UserName}】${$.petInfo.goodsInfo.goodsName}可以兑换了! (东东萌宠)\n`;
 			}
 			if (userIndex2 != -1) {
-				ReceiveMessageGp2 += `【账号${$.index} ${$.nickName || $.UserName}】${$.petInfo.goodsInfo.goodsName}可以兑换了! (东东萌宠)\n`;
+				ReceiveMessageGp2 += `【账号${$.IndexGp2} ${$.nickName || $.UserName}】${$.petInfo.goodsInfo.goodsName}可以兑换了! (东东萌宠)\n`;
 			}
 			if (userIndex1 == -1 && userIndex2 == -1) {
-				allReceiveMessage += `【账号${$.index} ${$.nickName || $.UserName}】${$.petInfo.goodsInfo.goodsName}可以兑换了! (东东萌宠)\n`;
+				allReceiveMessage += `【账号${$.IndexAll} ${$.nickName || $.UserName}】${$.petInfo.goodsInfo.goodsName}可以兑换了! (东东萌宠)\n`;
 			}
 		} else if ($.petInfo.petStatus === 6) {
 			if (userIndex1 != -1) {
-				ReceiveMessageGp1 += `【账号${$.index} ${$.nickName || $.UserName}】未选择物品! (东东萌宠)\n`;
+				ReceiveMessageGp1 += `【账号${$.IndexGp1} ${$.nickName || $.UserName}】未选择物品! (东东萌宠)\n`;
 			}
 			if (userIndex2 != -1) {
-				ReceiveMessageGp2 += `【账号${$.index} ${$.nickName || $.UserName}】未选择物品! (东东萌宠)\n`;
+				ReceiveMessageGp2 += `【账号${$.IndexGp2} ${$.nickName || $.UserName}】未选择物品! (东东萌宠)\n`;
 			}
 			if (userIndex1 == -1 && userIndex2 == -1) {
-				allWarnMessage += `【账号${$.index} ${$.nickName || $.UserName}】未选择物品! (东东萌宠)\n`;
+				allWarnMessage += `【账号${$.IndexAll} ${$.nickName || $.UserName}】未选择物品! (东东萌宠)\n`;
 			}
 		} else if (response.resultCode === '0') {
 			ReturnMessage += `【东东萌宠】${$.petInfo.goodsInfo.goodsName}`;
@@ -888,7 +892,7 @@ function redPacket() {
 						if ($.jdRed > 0)
 							$.message += `【京东红包】${$.jdRed}(将过期${$.jdRedExpire.toFixed(2)})元 \n`;
 						if ($.jdhRed > 0)
-							$.message += `【健康红包】${$.jdhRed}(将过期${$.jdhRedExpire.toFixed(2)})元 `;
+							$.message += `【健康红包】${$.jdhRed}(将过期${$.jdhRedExpire.toFixed(2)})元 \n`;
 					} else {
 						console.log(`京东服务器返回空数据`)
 					}
