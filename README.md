@@ -120,6 +120,11 @@
 	
 	这样USERGP1 推送到组2，USERGP2推送到组3，剩下的推送到原始组别.
 	
+	(4) BEANCHANGE_DISABLECASH
+	
+	例子 :  export BEANCHANGE_DISABLECASH="true"  禁用领现金项目显示.
+	
+	
 	
 3.sendNotify.js 
 
