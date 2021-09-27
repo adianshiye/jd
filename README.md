@@ -132,6 +132,9 @@
 	
 	标题按照分组分别为 京东月资产变动#1 京东月资产变动#2 京东月资产变动
 	
+	开启 :  export BEANCHANGE_ENABLEMONTH="true"  	
+		
+	
 	
 3.sendNotify.js 
 
