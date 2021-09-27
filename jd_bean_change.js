@@ -492,7 +492,7 @@ async function showMsg() {
 		}
 
 	}
-	const response = await await PetRequest('energyCollect');
+	const response = await PetRequest('energyCollect');
 	const initPetTownRes = await PetRequest('initPetTown');
 	if (initPetTownRes.code === '0' && initPetTownRes.resultCode === '0' && initPetTownRes.message === 'success') {
 		$.petInfo = initPetTownRes.result;
@@ -570,6 +570,7 @@ async function bean() {
 	todayArr = [];
 	do {
 		let response = await getJingBeanBalanceDetail(page);
+		await $.wait(2000);
 		// console.log(`第${page}页: ${JSON.stringify(response)}`);
 		if (response && response.code === "0") {
 			page++;
@@ -653,6 +654,7 @@ async function Monthbean() {
 	allyesterdayArr = [];
 	do {
 		let response = await getJingBeanBalanceDetail(allpage);
+		await $.wait(2000);
 		// console.log(`第${allpage}页: ${JSON.stringify(response)}`);
 		if (response && response.code === "0") {
 			allpage++;
@@ -917,8 +919,7 @@ function getJingBeanBalanceDetail(page) {
 					} else {
 						console.log(`京东服务器返回空数据`)
 					}
-				}
-				await $.wait(2 * 1000);
+				}				
 			} catch (e) {
 				$.logErr(e, resp)
 			}
