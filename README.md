@@ -43,7 +43,7 @@
 
 2.jd_bean_change.js
 
-自用的京东资产变动查询加强版
+  京东资产变动 + 白嫖榜 + 京东月资产变动
 
 注意: 
 
@@ -63,7 +63,7 @@
 
 (2)京东白嫖榜会独立通知
    
-	即需要通过设置sendNotify的NOTIFY_GROUP_LIST加入“京东白嫖榜”单独控制通知组别.
+	即可以通过设置sendNotify的NOTIFY_GROUP_LIST加入“京东白嫖榜”单独控制通知组别.
 	
 	没有指定则默认通过组1的参数设定进行通知.
 
@@ -124,6 +124,13 @@
 	
 	例子 :  export BEANCHANGE_DISABLECASH="true"  禁用领现金项目显示.
 	
+(4)BEANCHANGE_ENABLEMONTH	
+
+	每月1号17点后如果执行资产查询，开启京东月资产变动的统计和推送.
+	
+	拆分通知和分组通知的变量都可以兼容.
+	
+	标题按照分组分别为 京东月资产变动#1 京东月资产变动#2 京东月资产变动
 	
 	
 3.sendNotify.js 
