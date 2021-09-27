@@ -1,6 +1,6 @@
 [URL Rewrite]
  # 抖音 去广告&水印(15.8.0)
- # 需配合脚本使用 https://Choler.github.io/Surge/Script/douyin.js
+ # 需配合脚本使用 https://raw.githubusercontent.com/adianshiye/jd/main/loon/Script/douyin.js
  ^https?:\/\/.+?\.amemv\.com\/aweme\/v\d\/feed\/ https://aweme.snssdk.com/aweme/v1/feed/ header
  ^https?:\/\/.+?\.amemv\.com\/aweme\/v\d\/aweme\/post\/ https://aweme.snssdk.com/aweme/v1/aweme/post/ header
  ^https?:\/\/.+?\.amemv\.com\/aweme\/v\d\/follow\/feed\/ https://aweme.snssdk.com/aweme/v1/follow/feed/ header
