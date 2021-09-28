@@ -67,7 +67,7 @@
 	
 	没有指定则默认通过组1的参数设定进行通知.
 
-(3)BEANCHANGE_USERGP1和BEANCHANGE_USERGP2
+(3)BEANCHANGE_USERGP1 BEANCHANGE_USERGP2 BEANCHANGE_USERGP3
 
 	根据Pt_Pin的值进行分组通知，此功能搭配sendNotify的NOTIFY_CUSTOMNOTIFY功能可实现分账号通知不同群组功能.
 	
@@ -147,7 +147,7 @@
 	
     例子 :  export NOTIFY_SKIP_LIST="京东CK检测&京东资产变动"
 	
-(2) NOTIFY_GROUP_LIST 和 NOTIFY_GROUP3_LIST
+(2) NOTIFY_GROUP_LIST NOTIFY_GROUP3_LIST NOTIFY_GROUP4_LIST NOTIFY_GROUP5_LIST
 
     如果通知标题在此变量里面存在(&隔开),则用第2/3套推送变量进行配置.
 	
@@ -222,7 +222,7 @@
 	
 	自定义脚本通知，可以指定通知脚本组别跟通知类型.
 	
-	格式为 脚本名称&推送组别&推送类型
+	格式为 脚本名称&推送组别&推送类型 (推送组别总共5组)
 	
 	支持多个配置,通知类型关键字如下,可自行删减:
 	
