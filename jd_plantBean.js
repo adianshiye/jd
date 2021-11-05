@@ -43,7 +43,7 @@ let currentRoundId = null;//本期活动id
 let lastRoundId = null;//上期id
 let roundList = [];
 let awardState = '';//上期活动的京豆是否收取
-let randomCount = $.isNode() ? 6 : 6;
+let randomCount = $.isNode() ? 1 : 1;
 let num;
 !(async () => {
   await requireConfig();
