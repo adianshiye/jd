@@ -48,7 +48,7 @@ function wa_lua_on_handshake_cb(ctx)
                     'Host: ' .. host .. ':' .. port .. '\r\n' ..
                     'Proxy-Connection: Keep-Alive\r\n'..
                     'X-T5-Auth: 1962898709\r\n' ..
-                    'User-Agent: okhttp/3.11.0 Dalvik/2.1.0(Linux; U; Android 10;zh-cn; Redmi Note 7 Buid/QKQ1.190910.002) baiduboxapp/11.0.5.12 (Baidu; P1 11)\r\n'
+                    'User-Agent: baiduboxapp\r\n'
         ctx_write(ctx, res)
         flags[uuid] = kHttpHeaderSent
     end
